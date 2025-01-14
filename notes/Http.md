@@ -18,6 +18,12 @@ Http/1 is used  20-25%  max u can send a image, no css
 Http/2 is used by 80% it will send file and also its dependency
 uses multiplexing (many to one ) [many files at same time] uses compression
 
+HTTP VERSION
+1 -> for each time it will make threeway handshake
+1.1 -> one time threeway handshake ,coonection will established untill the closing of site
+2 -> uses multiplexing
+3 -> QUIC (udp)
+
 https -> use the encryption (encryption keys are the certificates)
 
 big companies don't use the https (this done to reduce the cost)
