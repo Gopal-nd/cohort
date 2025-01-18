@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react';
-import { ChecklistSection, ChecklistItem, ImportanceLevel } from '../../types/checklist';
+import { ChecklistSection,  ImportanceLevel } from '../../types/checklist';
 import { X } from 'lucide-react';
 
 const checklist: ChecklistSection[] = [
