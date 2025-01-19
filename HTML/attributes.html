@@ -70,7 +70,8 @@
         <h2>Link Example</h2>
         <a href="https://www.example.com" target="_blank" rel="noopener noreferrer">Visit Example</a>
     </section>
-
+<p id="test" class="lets do this">lnew pharagraph </p>
+        <a href="#"  title="title" target="_top"></a>
     <section id="table-example">
         <h2>Table Example</h2>
         <table border="1">
@@ -141,7 +142,8 @@
 
     <script src="scripts.js"></script>
 
-        <input type="text" />
+        <input type="text" placeholder="make it possible" required  />
+        
 <input type="text" writingsuggestions />
 <input type="text" writingsuggestions="true" />
         <hr>
@@ -153,5 +155,27 @@
         <a href="mailto:hajhh@weu.fj">make a mail</a>
         <br>
 <a href="instagram://users?username=gopal_nd1"> instagram</a>
+        <div id="tab">
+            <button type="button" data-tab="1">Press the button</button>
+            <button type="button" data-tab="2">Press the button</button>
+            
+            <button type="button" data-tab="3">Press the button</button>
+        </div>
+        <script>
+            document.getElementById('tab').addEventListener('click', (e) => {
+        if (e.target.dataset.tab) {
+            console.log(`Tab ${e.target.dataset.tab} clicked`);
+        }
+    });
+        </script>
+        <canvas id="can" width="200" height="200"> rectangle</canvas>
+        <script>
+            const can = document.getElementById('can')
+            const ctx = can.getContext('2d');
+            ctx.fillStyle = 'blue'
+            ctx.fillRect(50,50,100,100)
+
+</script>
+
 </body>
 </html>

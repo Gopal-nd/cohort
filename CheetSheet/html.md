@@ -501,5 +501,18 @@ This cheat sheet provides a comprehensive overview of common HTML tags and attri
 
 ---
 
+## Starter cheet sheet
+
 https://web.stanford.edu/group/csp/cs21/htmlcheatsheet.pdf
 
+
+---
+## html docs
+- Tags
+- Attributes
+- Global Attributes
+- inputs
+
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video 
+
+---

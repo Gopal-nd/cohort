@@ -8,12 +8,15 @@
   </head>
   <body>
  <h1>Form</h1> 
-    <form action="#" method="GET">
+    <form action="#" method="GET" style="text-align: center; background: #634723; width: 100vh; height: 100vh; margin: auto;">
      <label for="Name">Name</label> 
-      <input type="text" placeholder="enter your name"   name="name" />
+      <input type="text" placeholder="enter your name"   name="name"  required />
+      <br>
       <label for="color">Color</label>
-      <input type="color" name="color" value="">
-      <button type="submit"></button>
+      <input type="color" name="color" value="" required>
+      <br>
+      <input type="password" name="" pattern=".{8,}" required  value="">
+      <button type="submit">submit</button>
     </form>
   </body>
 </html>
