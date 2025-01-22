@@ -158,6 +158,15 @@
      ```html
      <input type="week" name="week">
      ```
+#### 23. **Select**
+```html
+<select name="dropdown" id="dropdown">
+  <option value="option1">Option 1</option>
+  <option value="option2">Option 2</option>
+  <option value="option3">Option 3</option>
+</select>
+
+```
 
 
 ## All differnt types of the input tages
@@ -184,3 +193,9 @@
 <input type="time">
 <input type="url">
 <input type="week">
+<select name="dropdown" id="dropdown">
+  <option value="option1">Option 1</option>
+  <option value="option2">Option 2</option>
+  <option value="option3">Option 3</option>
+</select>
+

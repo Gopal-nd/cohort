@@ -1,47 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Input</title>
-    <link href="css/style.css" rel="stylesheet">
-  </head>
-  <body>
- <h1>Html Inputs </h1> 
-    <form>
-      <input type="button" name="Buttom" value="click em">
-      <br>
-      <input type="color" name="" value="">
-      <br>
-      <input type="submit" placeholder="submit" name="" value="submit">
-      <br>
-      <input type="tel"  name="" >
-      <br>
-      <input type="text" placeholder="text" name="" value="">
-      <br>
-      <input type="date" placeholder="" name="" value="">
-      <br>
-      <input type="week" name="" value="">
-      <br>
-      <input type="time" name="" value="">
-      <br>
-      <input type="range" name="" value="">
-      <br>
-      <input type="month" name="" value="">
-      <br>
-      <input type="radio" name="" value="">
-      <br>
-      <input type="file" name="" value="">
-      <br>
-      <input type="url" name="" value="">
-      <br>
-      <input type="reset" name="" value="">
-      <br>
-      <input type="checkbox" name="" value="">
-      <br>
-      <br>
-<input type="image" name="" value="">
-      <input type="search" name="" value="">
-    </form>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input Tags with Dynamic Values</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .input-group {
+      margin-bottom: 15px;
+    }
+    label {
+      margin-right: 10px;
+    }
+    .value {
+      color: blue;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>HTML Input Tags with Dynamic Value Display</h1>
+  
+  <form id="inputForm">
+    <!-- Render all input types -->
+    <div class="input-group">
+      <label>Button:</label>
+      <input type="button" value="Click Me" onclick="updateValue('button', 'Button Clicked!')">
+      <span id="button" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Checkbox:</label>
+      <input type="checkbox" id="checkbox" onchange="updateValue('checkbox', this.checked ? 'Checked' : 'Unchecked')">
+      <span id="checkbox" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Color:</label>
+      <input type="color" id="color" onchange="updateValue('color', this.value)">
+      <span id="color" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Date:</label>
+      <input type="date" id="date" onchange="updateValue('date', this.value)">
+      <span id="date" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Datetime-local:</label>
+      <input type="datetime-local" id="datetime-local" onchange="updateValue('datetime-local', this.value)">
+      <span id="datetime-local" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Email:</label>
+      <input type="email" id="email" oninput="updateValue('email', this.value)">
+      <span id="email" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>File:</label>
+      <input type="file" id="file" onchange="updateValue('file', this.files[0]?.name || 'No file selected')">
+      <span id="file" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Hidden:</label>
+      <input type="hidden" id="hidden" value="Hidden Value">
+      <span id="hidden" class="value">Hidden Value</span>
+    </div>
+
+    <div class="input-group">
+      <label>Image:</label>
+      <input type="image" src="https://via.placeholder.com/100" alt="Submit" onclick="updateValue('image', 'Image clicked')">
+      <span id="image" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Month:</label>
+      <input type="month" id="month" onchange="updateValue('month', this.value)">
+      <span id="month" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Number:</label>
+      <input type="number" id="number" oninput="updateValue('number', this.value)">
+      <span id="number" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Password:</label>
+      <input type="password" id="password" oninput="updateValue('password', this.value)">
+      <span id="password" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Radio:</label>
+      <input type="radio" id="radio1" name="radio" value="Option 1" onclick="updateValue('radio', this.value)"> Option 1
+      <input type="radio" id="radio2" name="radio" value="Option 2" onclick="updateValue('radio', this.value)"> Option 2
+      <span id="radio" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Range:</label>
+      <input type="range" id="range" min="0" max="100" oninput="updateValue('range', this.value)">
+      <span id="range" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Reset:</label>
+      <input type="reset" value="Reset" onclick="updateValue('reset', 'Form Reset')">
+      <span id="reset" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Search:</label>
+      <input type="search" id="search" oninput="updateValue('search', this.value)">
+      <span id="search" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Submit:</label>
+      <input type="submit" value="Submit" onclick="updateValue('submit', 'Form Submitted')">
+      <span id="submit" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Tel:</label>
+      <input type="tel" id="tel" oninput="updateValue('tel', this.value)">
+      <span id="tel" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Text:</label>
+      <input type="text" id="text" oninput="updateValue('text', this.value)">
+      <span id="text" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Time:</label>
+      <input type="time" id="time" onchange="updateValue('time', this.value)">
+      <span id="time" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>URL:</label>
+      <input type="url" id="url" oninput="updateValue('url', this.value)">
+      <span id="url" class="value"></span>
+    </div>
+
+    <div class="input-group">
+      <label>Week:</label>
+      <input type="week" id="week" onchange="updateValue('week', this.value)">
+      <span id="week" class="value"></span>
+    </div>
+      <select name="dropdown" class="input-group" id="dropdown">
+  <option value="option1">Option 1</option>
+  <option value="option2">Option 2</option>
+  <option value="option3">Option 3</option>
+</select>
+  </form>
+
+  <script>
+    function updateValue(id, value) {
+      document.getElementById(id).textContent = value;
+    }
+  </script>
+</body>
 </html>
+
