@@ -1,0 +1,11 @@
+body {
+  color: green;
+  background-color: orange;
+  text-decoration: none;
+}
+p {
+  font-size: 100px;
+}
+head{
+  font: 400;
+}
