@@ -11,3 +11,5 @@ for(let i=0;i<10;i++){
   console.log(`4 X ${i+1} = ${(i+1)*4} \t`)
 }
 
+console.log("first"):w
+
