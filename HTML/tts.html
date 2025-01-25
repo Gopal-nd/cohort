@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text-to-Speech with ResponsiveVoice</title>
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=your-api-key"></script>
+</head>
+<body>
+    <h1>Text-to-Speech Demo</h1>
+    <textarea id="text-input" rows="5" cols="40" placeholder="Enter text here..."></textarea>
+    <br>
+    <button onclick="readText()">Read Text tt</button>
+
+    <script>
+        function readText() {
+            const text = document.getElementById('text-input').value.trim();
+            if (text === '') {
+                alert('Please enter some text.');
+                return;
+            }
+
+            // Use ResponsiveVoice to read the text
+            responsiveVoice.speak(text, "UK English Male"); // You can choose different voices here
+        }
+    </script>
+</body>
+</html>
+

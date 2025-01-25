@@ -3,53 +3,153 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CSS</title>
-  </head> 
+    <title>Learning css</title>
+    <link href="css/style.css" rel="stylesheet">
+  </head>
   <style>
+  :root {
+  --main-color: blue;
+  --hover-color: red;
+}
+
+
+  div:not(.except,.form-item){
+    display: flex;
+    font-size: 50px;
+    background-color: var(--main-color);
+  }
+  #prior{
+    color:blue;
+  }
   button{
     color: green;
-    background-color: orange;
-
   }
-  .class-b{
-    font-size: 30px;
+  h1{
+    font: xx-large;
   }
-  .class-a{
-    font-size: 10px; 
-    color:red;
+  .btn{
+    background-color: black;
   }
-
-  .class-c{
-    font-size: 50px;
-  }
-  .child {
-width: 100px;
-    height: 50px;
-    border: 2px solid;
-    flex: 1;
-  }
-  .parent{
-    width: 400px;
-    height: 200px;
-    border: 2px solid;
+  .innerdiv{
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
+    border: 2px solid green;
+    padding: 10rem;
+    border-radius: 5rem;
   }
+  .greet::before {
+  content: "🌟 ";
+  color: gold;
+  font-size: 1.5rem;
+}
+  .title::before {
+  content: "ok";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: blue;
+  margin-right: 10px;
+}
+
+  div#example.highlight[type="text"]:hover {
+  background-color: lightblue;
+  color: darkblue;
+}
+  /* Specific styling for hovered text input */
+div#login.form-item[type="text"]:hover {
+  border: 2px solid green;
+}
+
+/* General styling for all form items */
+div.form-item {
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+ button:hover {
+      background-color: lightblue;
+      cursor: pointer;
+    }
+
+    /* Example for :active */
+    button:active {
+      transform: scale(0.98);
+      background-color: darkblue;
+      color: white;
+    }
+
+    /* Example for :focus */
+    input:focus {
+      border: 2px solid green;
+      font-size: 100px;
+      outline: none;
+    }
+
+    /* Example for :focus-visible */
+    button:focus-visible {
+      outline: 2px dashed red;
+    }
+
+    /* Example for :visited */
+    a:visited {
+      color: purple;
+    }
+
+    /* Example for :link */
+    a:link {
+      color: blue;
+      text-decoration: none;
+    }
+
   </style>
   <body>
-     <div class="parent">
-      <div class="child">
-      child  
-      </div>
-      <div class="child">
-      child  
-      </div>
-      <div class="child">
-      child  
-      </div>
-      <div class="child">
-      child  
+    <div>
+      
+<h1>This is css class</h1>  
+    <span>This is  inline</span>
+      <div class="innerdiv">
+        
+    <button >Click me</button>
+    <button class="btn">Click me</button>
+    <button class="btn">Click me</button>
+    <button class="btn">Click me</button>
+    <button style="color: gold;" class="btn" id="prior">Click me</button>
       </div>
     </div>
+    <div style="height: 10px; width: 10px; background-color: green; border-radius:9px;">
+      
+    </div>
+    <br>
+  <div style="height: 1rem; width: 1rem; background-color: green;">
+      
+    </div>
+    <p class="greet">Hello, world!</p>
+      <h1 class="title">CSS Specificity</h1>
+    <div id="example" class="highlight except" type="text">
+  Hover over me!
+</div>
+<div id="login" class="form-item except" type="text">
+  Username
+</div>
+<div id="password" class="form-item except" type="password">
+  Password
+</div>
+ <h1>Pseudo-Class Examples</h1>
+
+  <!-- Hover and Active Example -->
+  <button style="padding: 10px 20px; font-size: 16px;">Hover or Click Me</button>
+
+  <!-- Focus Example -->
+  <div style="margin: 20px 0;">
+    <input type="text" placeholder="Focus on me" style="padding: 10px; font-size: 16px;">
+  </div>
+
+  <!-- Visited and Link Example -->
+    <a href="https://www.example.com" target="_blank">Unvisited Link</a>
+    <br>
+    <a href="https://www.google.com" target="_blank">Visited Link</a>
+    <a href="x.com">x twitter</a>
+  
   </body>
 </html>
