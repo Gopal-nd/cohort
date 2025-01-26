@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>class 3.1 live</title>
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    nav{
+      display: flex;
+      background-color: blueviolet;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 80px;
+    }
+
+     nav div {
+      display: flex;
+      gap: 10px;
+    }
+
+    nav div button {
+      padding: 5px 10px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+    }
+ 
+     nav div button:hover {
+      background-color: blue;
+      color: white;
+      scale: 1.1;
+    } 
+    .hero{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background-color: blueviolet;
+      padding: 40px 80px ;
+      gap: 10px;
+    }
+    .hero div{
+      width: 50%;
+
+      gap: 20px;
+    }
+
+    .hero div h1 {
+      font-size: 3rem;
+    }
+    .hero div p {
+      margin: 10px 0px; 
+      font-size: 1rem;
+    } 
+    .hero div button {
+      padding: 10px 20px;
+      cursor: pointer;
+      border: none;
+      border-radius: 7px;
+      flex: 1;
+    }
+    .hero div img {
+      width: 100%;
+      border-radius: 20px;
+      object-fit: cover;
+      box-shadow: 0 0 10px black;
+    }
+    .hero div img:hover{
+      transform:rotate(1deg);
+      transition: all 0.5s ease-in-out;
+    }
+    .logos  {
+      padding: 10px;
+      text-align: center;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      margin: 20px 0px;
+      border: 1px solid black;
+      margin: 40px 20px;
+    }
+    section  h2 {
+      text-align: center;
+      padding: 10px;
+    }
+    section div img{ 
+      width: 100px;
+      object-fit: cover;
+    }
+    .card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid black;
+      margin: 0px 20px;
+    }
+    .card div {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid black;
+      align-items: center;
+      padding: 10px;
+    }
+    .card div img {
+      width: 100%;
+      object-fit: cover;
+   box-shadow: 0 0 10px black;
+    }
+    @media screen and (max-width:976px){
+
+    }
+    </style>
+  </head>
+  <body>
+ <nav>
+  <h1>Logo
+      </h1>
+      <div>
+          <p>Home</p>
+          <p>About</p>
+          <p>Contact</p>
+      </div>
+      <div>
+        <button type="button">Sign up</button>
+        <button type="button">Login</button>
+      </div>
+ </nav> 
+
+    <!-- hero section --> 
+    <section class="hero">
+     <div>
+     <h1>Hero Title</h1> 
+        <p>Thsi is super cool textThsi is super cool textThsi is super cool textThsi is super cool textThsi is super cool textThsi is super cool textThsi is super cool textThsi is super cool text</p>
+        <button type="button">Learn more</button>
+     </div> 
+      <div>
+        <img width="500" height="200" src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/202407/human-ai-080720473-16x9_0.png?VersionId=yVXLw3uFS6kYOUvvE05RrrquMQ.8O6K1&size=690:388" alt=""> 
+      </div>
+    </section>
+      <!-- Our client --> 
+    <section>
+      
+    <h2>Our Clients</h2>
+    <div class="logos">
+        <img src="https://i.pinimg.com/originals/01/ca/da/01cada77a0a7d326d85b7969fe26a728.jpg" alt=""> 
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" alt="">
+<img src="https://i.pinimg.com/originals/01/ca/da/01cada77a0a7d326d85b7969fe26a728.jpg" alt="">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" alt="">
+<img src="https://i.pinimg.com/originals/01/ca/da/01cada77a0a7d326d85b7969fe26a728.jpg" alt="">
+         </div>
+    </section>
+
+    <!-- card sections -->
+    <section class="card">
+      <div>
+      <img src="https://images.pexels.com/photos/28539583/pexels-photo-28539583/free-photo-of-majestic-mountain-peaks-at-sunrise.jpeg?auto=compress&cs=tinysrgb&w=300&lazy=load" alt="">
+        <h2>Card Title</h2>
+        <p>This is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is cool </p>
+     </div> 
+ <div>
+      <img src="https://images.pexels.com/photos/28539583/pexels-photo-28539583/free-photo-of-majestic-mountain-peaks-at-sunrise.jpeg?auto=compress&cs=tinysrgb&w=300&lazy=load" alt="">
+        <h2>Card Title</h2>
+        <p>This is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is cool </p>
+     </div> 
+  <div>
+      <img src="https://images.pexels.com/photos/28539583/pexels-photo-28539583/free-photo-of-majestic-mountain-peaks-at-sunrise.jpeg?auto=compress&cs=tinysrgb&w=300&lazy=load" alt="">
+        <h2>Card Title</h2>
+        <p>This is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is coolThis is cool </p>
+     </div> 
+    </section>
+  </body>
+</html>
