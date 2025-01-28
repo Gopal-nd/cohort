@@ -1,44 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Crips</title>
-    <link href="css/style.css" rel="stylesheet">
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <style>
-    :root{
-      --color:#242f47;
-      --bg:#e8f1fe;
-    }
-    </style>
-  </head>
-  <body class="text-[var(--color)] font-sans text-base">
-   <!-- not considerd just to put universal styling --> <div class="!font-normal m-0 p-0"> 
-      <nav class="bg-color-black selction:bg-white selection:text-black`">
-        <div class="fixed z-1 ">
-          <div class="h-[64px] border border-transparent flex relative items-center z-2 transition-all duration-200 ">
-            <div class="max-width-[1144px] my-auto py-[64px] w-[calc(100% - 128px)]"> 
-             <div class="flex justify-center items-center">
-             <div class="flex">
-             <a href="#" class="cursour-pointer border-none " aria-label="Crisp"><span class="h-[30px] w-[100px] bg-no-repeat bg-contain " style="background-image: url(images/clouds.svg);"></span></a> 
-             </div>
-              <div class="flex flex-1 p-3 items-center justify-center">
-               <ul class="flex text=[14px] list-none">
-                    <li class="mr-[6px]"><span class="flex items-center rounded-[10px] text-[#344055] p-[10px_13px] relative transition-all duration-100 ease-linear hover:bg-opacity-100 hover:text-[#344055]">
-    Features 
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" class="w-[9px] transition-all mb-[-2px] ml-6 color-transparent"><path stroke="#344055" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"></path></svg>
-</span></li>
-                
-               </ul> 
-              </div>
-             </div> 
-            </div>
-            
-          </div>
-          hi let me test is it working 
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crips</title>
+  <link href="style.css" rel="stylesheet">
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+</head>
+<body class="font-sans text-base font-normal text-sm leading-6 mt-[-2px]  mx-auto">
+  <nav class="max-h-[68px] px-6 py-2 max-w-5xl mx-auto z-5">
+    <div class="flex ">
+      <div class="flex justify-between items-center ">
+        <div class="flex items-center">
+          <img src="./images/download.svg" class="w-[100px] h-[30px]" alt="">
         </div>
-      </nav>
-    </div>        
-  </body>
-</html>
+        <div class="flex px-[48px] text-[#344055] text-[14px] font-medium font-bold">
+        <p class="py-[10px] px-[13px] flex items-center gap-1">
+          <span>Features</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" class="h-[5px]"><path stroke="#344055" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"></path></svg>
+        </p>
+
+        <p class="py-[10px] px-[13px] flex items-center gap-1">
+          <span>Apps</span>
+        </p>
+
+        <p class="py-[10px] px-[13px] flex items-center gap-1">
+          <span>Pricing</span>
+        </p>
+
+        <p class="py-[10px] px-[13px] flex items-center gap-1">
+          <span>Integrations</span>
+       </p>
+
+        <p class="py-[10px] px-[13px] flex items-center gap-1">
+          <span>Help</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" class="h-[5px]"><path stroke="#344055" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m1 1 4 4 4-4"></path></svg>
+        </p>
+        </div>
+
+        <div class="flex gap-[32px] flex-[0_0_auto] items-center">
+          <div class="flex items-center pr-[26px] pl-[13px] leading-[32px] gap-[9px]  border-transparent transition-all transition-colors rounded-[12px] shadow-[] backdrop-blur-[6px] text-[13.5px] shadow-[0_1px_2px_#2a3b511f] bg-gray-100">
+            <img src="./images/search.svg" alt="" class="h-[15px] w-[15px] aspect-[1/1]  ">
+            <span class="text-[#7d89b0]">Search</span>
+            <span class="py-[5px] bg-white text-[#5d6b98] leading-[20px] text-[11px]  rounded-[8px] px-2">Ctrl+K</span>
+          </div>
+          <div class="flex items-center">
+            <div class="mr-[24px] flex flex-[0_0_auto]">
+              <span class="inline-block">Log In</span>
+            </div>
+            <div class="rounded-lg px-4 py-1.5 bg-white text-[#344054] shadow-[0_1px_2px_#2a3b511f] border-[#12376914]">Get Started</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="mt-[40px] max-w-[100%]">
+    <div class="flex-col items-center gap-5 justify-center">
+      <div class="max-w-[300px] flex justify-center items-center mx-auto">
+
+        <p class=" flex gap-2 border text-blue-500 border-blue-500 px-3 py-4 rounded-[100px] items-center user-select-none">
+          <span class="leading-[12px]">
+            <span class="text-white bg-blue-500 font-bold mr-[4px] rounded-full px-2 text leading-[22px] py-[8px]">NEW</span>
+            <span class="font-bold ">
+              The New Crips V4 is out now
+            </span>
+            
+          </span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" class="" height="16px" width="16px"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m6 12 4-4-4-4"></path></svg>
+        </p>
+      </div>
+      <div class="mt-[25px] max-w-[640px] mx-auto selection:bg-white flex-col space-y-2">
+        <h1 class="text-[48px] leading-[50px] text-center font-bold font-sans">The future of customer support is here </h1>
+        <p class="text-center mt-[12px] text-[18px] font-normal leading-[26px]">The The all-in-one AI-powered business messaging platform that gathers teams, conversations, data and knowledge, around one place.</p>
+        <div class="flex justify-center mt-[20px] w-full">
+          <p class="flex px-[20px] py-[10px] rounded-lg  bg-linear-to-bl from-[#344054] to-black">
+            <span class="text-white font-bold">Use Crisp for free</span>
+          </p>
+          </p>
+        </div>
+        <p class="text-center text-[13px]">14 days free trial -- No commitment</p>
+      </div>
+    </div>
+    <div class="mt-[20px] mb-[-80px] overflow-hidden relative pt-[20px] w-full">
+      <div class="flex justify-center items-center relative text-center">
+        <div class="rounded-[24px] bg-white mx-[24xp] relative z-10">
+          <picture class="relative overflow-hidden w-full max-w-2xl h-[min(40vh,500px)]">
+            <img src="./images/screenshot.png" class="max-w-4xl h-full object-contain" alt="">
+          </picture>
+          <img src="./images/scene_left.png" class="w-[300px] h-[300] absolute z-30 left-[-20%] bottom-0" alt="">
+
+          <img src="./images/scene_right.png" class="w-[240px] h-[200] absolute z-30 right-[-15%] bottom-0" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="absolute top-0 bottom-0 right-0 left-0 -z-1">
+      <div class="h-[100%] w-[100%] overflow-hidden relative bg-gradient-to-b from-[#b9deff] via-[#b9deff] via-50% o-[#b9deff00] to-90%">
+        <img width="1662" src="./images/clouds.svg" style="overflow-clip-margin: content-box; overflow: clip;" class="object-cover absolute left-[-10%] top-[-350px] " alt="">
+        <img src="./images/land_left.svg" class="absolute bottom-[13%] left-0 scale-80 origin-left" alt="">
+
+        <img  width="620" src="./images/land_right.svg" class="absolute bottom-[10%] right-[-130px] scale-80 origin-left" alt="">
+      </div>
+    </div>
+  </div>
+</body>
+</html> 
