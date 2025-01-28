@@ -1,3 +1,16 @@
-test{
-    font-size: large;
+.btn{
+     display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.1s linear;
+    transition-property: border-color, transform;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0));
+    background-color: #1972f5;
+    border-color: #3d7fde;
+    border-radius: 12px;
+    padding: 6px 18px;
+    color: #fff;
 }
