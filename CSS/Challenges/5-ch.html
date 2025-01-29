@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Landing Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes morphing {
+            0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+            50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+            75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+            100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+        }
+   
+        </style>
+</head>
+<body class="max-w-4xl mx-auto min-h-screen bg-gradient-to-b from-[#f3f4f6] to-[#e5e7eb]" >
+    <section id="home" class=" flex items-center flex-col lg:flex-row mt-[20px] gap-10 ">
+
+            <div class="text-[18px] flex flex-col items-center text-center gap-8  mb-[24px]">
+                <h1 class="text-4xl font-extrabold">Welcome to the Future</h1>
+                <p class="text-xl text-[#6B7280]">Create something amazing with our innovative platform</p>
+                <div class="flex gap-2 items-center justify-center ">
+                    <a href="#assignments" class="px-4 py-2 rounded-2xl text-white bg-blue-500">View Assignments</a>
+                    <a href="#" class="px-4 py-2 rounded-2xl border border-blue-500 text-blue">Learn More</a>
+                </div>
+            </div>
+            <div class="relative mt-[50px]">
+                <div class="w-[400px] h-[400px] bg-gradient-to-b from-[#4F46E5] to-[#818CF8] rounded-[30%_70%_70%_30%_/_30%_30%_70%_70%] animate-[morphing_15s_infinite]"></div>
+            </div>
+       
+    </section>
+<br>
+<br>
+<hr>
+    <section id="assignments" class="mt-10">
+        <div class="flex flex-col items-center justify-center gap-10">
+            <div class="flex flex-wrap gap-10 p-5">
+                <a href="#" class="row-sapn-1  rounded-lg px-4 py-2 bg-white">
+                    <div class="card-content">
+                        <h2 class="text-2xl font-semibold">Chai Aur Fitness</h2>
+                        <p>A landing page for a fitness platform</p>
+                        <span class="text-blue-500">View Assignment →</span>
+                    </div>
+                </a>
+                <a href="landing-page-2/index.html" class="row-sapn-1  rounded-lg px-4 py-2 bg-white">
+                    <div class="card-content">
+                        <h2 class="text-2xl font-semibold">Chai Cohort</h2>
+                        <p>Learn to Code landing page</p>
+                        <span class="text-blue-500">View Assignment →</span>
+                    </div>
+                </a>
+                <a href="landing-page-3/index.html" class="row-sapn-1  rounded-lg px-4 py-2 bg-white">
+                    <div class="card-content">
+                        <h2 class="text-2xl font-semibold">ChaiPatti</h2>
+                        <p>Premium Tea Store landing page</p>
+                        <span class="text-blue-500">View Assignment →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
