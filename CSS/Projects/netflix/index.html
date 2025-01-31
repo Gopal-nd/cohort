@@ -15,6 +15,8 @@
         .hide-scrollbar {
             scrollbar-width: none;
         }
+
+
     </style>
 </head>
 
@@ -25,38 +27,38 @@
 
         <div class="absolute inset-0 -z-0">
             <img src="./images/background.jpg" class=" object-cover w-full h-full opacity-70" alt="">
-            <div class="absolute inset-0 bghero"></div>
+            <div class="absolute inset-0 bghero "></div>
         </div>
 
         <div
-            class="flex px-[80px] max-w-7xl mx-auto w-full h-[60px] py-[40px] z-10 justify-between text-white isolate  mb-[-120px] items-center">
+            class="flex md:px-[80px] max-w-7xl mx-auto w-full h-[60px] py-[40px] z-10 justify-between text-white isolate  mb-[-120px] items-center">
 
-            <div class="flex justify-between ml-[16px] items-center flex-wrap w-full">
-                <div class="flex h-[40px] ml-[16px] basis-[33.33% -16px] items-center">
+            <div class="flex justify-between  items-center flex-wrap w-full">
+                <div class="flex h-[40px]  items-center">
 
                     <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
                         class="h-8 w-32" alt="Netflix Logo">
                 </div>
-                <div class="basis-[calc(58.63% - 16px)] ml-16px flex flex-wrap justify-end h-[38px]">
+                <div class=" md:ml-16px flex flex-wrap justify-end h-[38px]">
                     <div class="flex">
-                        <div class="flex p-[3px] ml-[12px] flex-wrap justify-end gap-2">
+                        <div class="flex p-[3px] md:ml-[12px] flex-wrap justify-end gap-2">
                             <div class="flex flex-wrap shrink-0 items-center gap-4 h-[32px]">
                                 <span
                                     class="relative flex gap-2 items-center border border-gray-100 rounded-md px-[4px] pr-[30px] py-[4px]">
                                     <div class="flex items-center gap-[2px] text-left leading-[16px]">
                                         <div class="flex h-[16px] w-[16px]">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" role="img"
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" role="img"
                                                 viewBox="0 0 16 16" width="16" height="16" data-icon="LanguagesSmall"
                                                 aria-hidden="true">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
                                                     d="M10.7668 5.33333L10.5038 5.99715L9.33974 8.9355L8.76866 10.377L7.33333 14H9.10751L9.83505 12.0326H13.4217L14.162 14H16L12.5665 5.33333H10.8278H10.7668ZM10.6186 9.93479L10.3839 10.5632H11.1036H12.8856L11.6348 7.2136L10.6186 9.93479ZM9.52722 4.84224C9.55393 4.77481 9.58574 4.71045 9.62211 4.64954H6.41909V2H4.926V4.64954H0.540802V5.99715H4.31466C3.35062 7.79015 1.75173 9.51463 0 10.4283C0.329184 10.7138 0.811203 11.2391 1.04633 11.5931C2.55118 10.6795 3.90318 9.22912 4.926 7.57316V12.6667H6.41909V7.51606C6.81951 8.15256 7.26748 8.76169 7.7521 9.32292L8.31996 7.88955C7.80191 7.29052 7.34631 6.64699 6.9834 5.99715H9.06968L9.52722 4.84224Z"
-                                                    fill="currentColor"></path>
+                                                    fill="#fff"></path>
                                             </svg>
                                         </div>
                                     </div>
                                     <div class="relative">
 
-                                        <select name="" class="items-center appearance-none " id="">
+                                        <select name="" class=" hidden md:block appearance-none " id="">
                                             <option value="english">English</option>
                                             <option value="hindi">Hindi</option>
                                         </select>
@@ -86,7 +88,7 @@
 
 
         <div
-            class="pl-[32px]  relative xl:scale-120  text-white h-full pb-[32px] pr-[32px] flex flex-col justify-center items-center">
+            class="pl-[32px]  relative  text-white h-full pb-[32px] pr-[32px] flex flex-col justify-center items-center">
             <div class="flex flex-col text-center justify-center items-center gap-4 text-center">
                 <h1 class="text-[40px] font-extrabold text-center text-white leading-[35px] max-w-[500px]">Unlimited
                     movies, TV shows and more
@@ -110,7 +112,7 @@
                             </label>
                         </div>
                     <button
-                        class="font-bold p-4 rounded-md bg-[#e50914] w-1/2  justify-center items-center  flex text-lg lg:text-xl gap-4">Get
+                        class="font-bold p-4 rounded-md bg-[#e50914] w-full sm:max-w-xs max-w-[200px] justify-center items-center  flex text-lg lg:text-xl gap-4">Get
                         Started <div aria-hidden="true" class="default-ltr-cache-1lj9d5t e1ax5wel0"><svg
                                 xmlns="http://www.w3.org/2000/svg" fill="none" role="img" viewBox="0 0 24 24" width="24"
                                 height="24" data-icon="ChevronRightStandard" aria-hidden="true">
@@ -141,15 +143,15 @@
             </svg>
 
         </div>
-        <div class="px-[80px] mt-[100px] max-w-6xl mx-auto text-white w-full">
+        <div class="px-[10px] lg:px-[80px] mt-[100px] max-w-6xl mx-auto text-white w-full">
             <div class="flex flex-col gap-[40px] items-center justify-center w-full">
 
                 <div>
-                    <h2 class="text-2xl font-bold text-white">Trending Now</h2>
+                    <h2 class="text-2xl font-bold text-start sm:block text-white">Trending Now</h2>
                     <div class="p-2 mt-[12px]">
                         <div class="flex relative">
                             <ul
-                                class="flex list-none relative overflow-x-scroll   hide-scrollbar overflow-y-hidden max-w-2xl lg:max-w-4xl ">
+                                class="flex list-none relative overflow-x-scroll   hide-scrollbar overflow-y-hidden max-w-xs md:max-w-2xl lg:max-w-4xl ">
 
                                 <li
                                     class="flex flex-shrink-0 h-full w-[184px] list-none p-[4.8px_10px] scroll-mx-[36.8px] scroll-snap-start text-left text-white font-sans box-border isolate">
@@ -817,7 +819,7 @@
                 </div>
             </div>
 
-            <div class="gap-2 mt-[12px] flex px-20 py-20  flex-col  flex-wrap w-full">
+            <div class="gap-2 mt-[12px] flex py-20  flex-col  flex-wrap w-full">
 
 
                 <p class="font-bold text-center text-lg">Ready to watch? Enter your email to create or restart your
@@ -838,7 +840,7 @@
                         </label>
                     </div>
                     <button
-                        class="font-bold p-4 rounded-md bg-[#e50914] w-1/2  justify-center items-center  flex text-lg lg:text-xl gap-4">Get
+                        class="font-bold p-4 rounded-md bg-[#e50914] sm:max-w-xs max-w-[200px] justify-center items-center  flex text-lg lg:text-xl gap-4">Get
                         Started <div aria-hidden="true" class="default-ltr-cache-1lj9d5t e1ax5wel0"><svg
                                 xmlns="http://www.w3.org/2000/svg" fill="none" role="img" viewBox="0 0 24 24" width="24"
                                 height="24" data-icon="ChevronRightStandard" aria-hidden="true">
@@ -897,3 +899,10 @@
 </body>
 
 </html>
+
+
+Key learnings 
+1. curve border
+2. gradient
+3. interactive input 
+4. card 
