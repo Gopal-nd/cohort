@@ -3,7 +3,7 @@
 let i;
 const d = 1;    // it should be initalized it cannot be undefined 
 
-//prematives
+//prematives // directly stored in stack
 
 let name = "raj";
 
@@ -21,7 +21,15 @@ let undefinedvalue = undefined;
 
 let isbool = true; // or false
 
+
 // non-prematives
+
+//array
+//objects
+// map
+//date
+//set
+
 
 let arrayvalue = ["ok" ,22, 2.23,"true"];
 
@@ -43,6 +51,7 @@ console.log(typeof(nullvalue))  // type of null is object
 console.log(typeof(i))
 console.log(typeof(undefinedvalue))
 
+let isSure = confirm("are you sure")
 
 console.log(arrayvalue)
 

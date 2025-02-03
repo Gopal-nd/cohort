@@ -10,3 +10,14 @@ fruits.unshift("kewi")  //at first
 
 fruits.pop()
 
+
+let names = "superMan";
+
+function nameChanger(names){
+
+    names = "batMan";
+}
+
+nameChanger(names)
+
+console.log(names);
