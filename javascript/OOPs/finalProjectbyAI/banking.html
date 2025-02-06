@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f2f5;
+        }
+
+        .section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        input, select, button {
+            margin: 5px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #output {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 100px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Banking System</h1>
+
+    <!-- Create Account Section -->
+    <div class="section">
+        <h2>Create New Account</h2>
+        <input type="text" id="holderName" placeholder="Holder Name">
+        <select id="accountType">
+            <option value="Savings">Savings Account</option>
+            <option value="Current">Current Account</option>
+        </select>
+        <button onclick="createAccount()">Create Account</button>
+    </div>
+
+    <!-- Deposit Section -->
+    <div class="section">
+        <h2>Deposit Money</h2>
+        <input type="text" id="depositAccount" placeholder="Account Number">
+        <input type="number" id="depositAmount" placeholder="Amount">
+        <button onclick="deposit()">Deposit</button>
+    </div>
+
+    <!-- Withdraw Section -->
+    <div class="section">
+        <h2>Withdraw Money</h2>
+        <input type="text" id="withdrawAccount" placeholder="Account Number">
+        <input type="number" id="withdrawAmount" placeholder="Amount">
+        <button onclick="withdraw()">Withdraw</button>
+    </div>
+
+    <!-- Transfer Section -->
+    <div class="section">
+        <h2>Transfer Money</h2>
+        <input type="text" id="fromAccount" placeholder="From Account">
+        <input type="text" id="toAccount" placeholder="To Account">
+        <input type="number" id="transferAmount" placeholder="Amount">
+        <button onclick="transfer()">Transfer</button>
+    </div>
+
+    <!-- Transaction History Section -->
+    <div class="section">
+        <h2>View Transactions</h2>
+        <input type="text" id="historyAccount" placeholder="Account Number">
+        <button onclick="viewTransactions()">Show History</button>
+    </div>
+
+    <!-- Output Display -->
+    <div id="output"></div>
+
+    <script>
+        // Include the original banking system code here
+        // 🔹 Class representing a single Transaction
+        class Transaction {
+            constructor(transactionID, amount, type) {
+                this.transactionID = transactionID;
+                this.amount = amount;
+                this.type = type;
+                this.timestamp = new Date();
+            }
+        }
+
+        // 🔹 Base Account Class
+        class Account {
+            constructor(accountNumber, holderName, balance = 0) {
+                this.accountNumber = accountNumber;
+                this.holderName = holderName;
+                this.balance = balance;
+                this.transactionHistory = [];
+            }
+
+            deposit(amount) {
+                if (amount > 0) {
+                    this.balance += amount;
+                    this.transactionHistory.push(new Transaction(this.generateTransactionID(), amount, "Deposit"));
+                    console.log(`₹${amount} deposited to account ${this.accountNumber}. New Balance: ₹${this.balance}`);
+                } else {
+                    console.log("Deposit amount must be greater than zero.");
+                }
+            }
+
+            withdraw(amount) {
+                console.log("Withdraw method should be implemented in child classes.");
+            }
+
+            viewTransactions() {
+                console.log(`Transaction History for Account ${this.accountNumber}:`);
+                if (this.transactionHistory.length === 0) {
+                    console.log("No transactions found.");
+                } else {
+                    this.transactionHistory.forEach((t, index) => {
+                        console.log(`${index + 1}. ${t.type} ₹${t.amount} on ${t.timestamp}`);
+                    });
+                }
+            }
+
+            generateTransactionID() {
+                return `${this.accountNumber}-${Date.now()}`;
+            }
+        }
+
+        // 🔹 Savings Account Class
+        class SavingsAccount extends Account {
+            constructor(accountNumber, holderName, balance = 0, interestRate = 4, withdrawLimit = 10) {
+                super(accountNumber, holderName, balance);
+                this.interestRate = interestRate;
+                this.withdrawLimit = withdrawLimit;
+                this.withdrawCount = 0;
+            }
+
+            withdraw(amount) {
+                if (this.withdrawCount >= this.withdrawLimit) {
+                    console.log(`Withdrawal limit reached for account ${this.accountNumber}.`);
+                } else if (amount > 0 && this.balance - amount >= 1000) {
+                    this.balance -= amount;
+                    this.withdrawCount++;
+                    this.transactionHistory.push(new Transaction(this.generateTransactionID(), amount, "Withdrawal"));
+                    console.log(`₹${amount} withdrawn from account ${this.accountNumber}. Remaining Balance: ₹${this.balance}`);
+                } else {
+                    console.log(`Insufficient balance or minimum balance restriction applied.`);
+                }
+            }
+        }
+
+        // 🔹 Current Account Class
+        class CurrentAccount extends Account {
+            constructor(accountNumber, holderName, balance = 0, overdraftLimit = 50000) {
+                super(accountNumber, holderName, balance);
+                this.overdraftLimit = overdraftLimit;
+            }
+
+            withdraw(amount) {
+                if (this.balance - amount >= -this.overdraftLimit) {
+                    this.balance -= amount;
+                    this.transactionHistory.push(new Transaction(this.generateTransactionID(), amount, "Withdrawal"));
+                    console.log(`₹${amount} withdrawn from account ${this.accountNumber}. New Balance: ₹${this.balance}`);
+                } else {
+                    console.log(`Withdrawal denied! Overdraft limit exceeded.`);
+                }
+            }
+        }
+
+        // 🔹 Bank Class
+        class Bank {
+            constructor() {
+                this.accounts = [];
+            }
+
+            createAccount(holderName, type) {
+                const accountNumber = `AC${Math.floor(Math.random() * 1000000)}`;
+                let newAccount;
+
+                if (type === "Savings") {
+                    newAccount = new SavingsAccount(accountNumber, holderName, 1000);
+                } else if (type === "Current") {
+                    newAccount = new CurrentAccount(accountNumber, holderName);
+                } else {
+                    console.log("Invalid account type.");
+                    return;
+                }
+
+                this.accounts.push(newAccount);
+                console.log(`New ${type} Account created for ${holderName}. Account Number: ${accountNumber}`);
+                return newAccount;
+            }
+
+            findAccount(accountNumber) {
+                return this.accounts.find(acc => acc.accountNumber === accountNumber);
+            }
+
+            deposit(accountNumber, amount) {
+                const account = this.findAccount(accountNumber);
+                if (account) {
+                    account.deposit(amount);
+                } else {
+                    console.log(`Account ${accountNumber} not found.`);
+                }
+            }
+
+            withdraw(accountNumber, amount) {
+                const account = this.findAccount(accountNumber);
+                if (account) {
+                    account.withdraw(amount);
+                } else {
+                    console.log(`Account ${accountNumber} not found.`);
+                }
+            }
+
+            transfer(fromAccountNumber, toAccountNumber, amount) {
+                const fromAccount = this.findAccount(fromAccountNumber);
+                const toAccount = this.findAccount(toAccountNumber);
+
+                if (!fromAccount || !toAccount) {
+                    console.log("One or both accounts not found.");
+                    return;
+                }
+
+                if (amount > 0 && (fromAccount.balance - amount >= -fromAccount.overdraftLimit)) {
+                    fromAccount.withdraw(amount);
+                    toAccount.deposit(amount);
+                    console.log(`₹${amount} transferred from ${fromAccountNumber} to ${toAccountNumber}`);
+                } else {
+                    console.log("Insufficient balance or overdraft limit exceeded.");
+                }
+            }
+
+            viewTransactions(accountNumber) {
+                const account = this.findAccount(accountNumber);
+                if (account) {
+                    account.viewTransactions();
+                } else {
+                    console.log(`Account ${accountNumber} not found.`);
+                }
+            }
+        }
+
+        // Initialize bank
+        const myBank = new Bank();
+
+        // Redirect console.log to output div
+        const outputDiv = document.getElementById('output');
+        const oldLog = console.log;
+        console.log = function(message) {
+            oldLog.apply(console, arguments);
+            outputDiv.innerHTML += message + '\n';
+        };
+
+        // UI Functions
+        function createAccount() {
+            const holderName = document.getElementById('holderName').value;
+            const type = document.getElementById('accountType').value;
+            myBank.createAccount(holderName, type);
+        }
+
+        function deposit() {
+            const accountNumber = document.getElementById('depositAccount').value;
+            const amount = parseFloat(document.getElementById('depositAmount').value);
+            myBank.deposit(accountNumber, amount);
+        }
+
+        function withdraw() {
+            const accountNumber = document.getElementById('withdrawAccount').value;
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            myBank.withdraw(accountNumber, amount);
+        }
+
+        function transfer() {
+            const fromAccount = document.getElementById('fromAccount').value;
+            const toAccount = document.getElementById('toAccount').value;
+            const amount = parseFloat(document.getElementById('transferAmount').value);
+            myBank.transfer(fromAccount, toAccount, amount);
+        }
+
+        function viewTransactions() {
+            const accountNumber = document.getElementById('historyAccount').value;
+            myBank.viewTransactions(accountNumber);
+        }
+    </script>
+</body>
+</html>
