@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <h1 id="header" style="font-size:12px">Hello people</h1>
+    <button class="btn">Click me</button>
+    <script src="closure.js">
+        let hi = document.getElementById("header")
+        function setSize(size) {
+            return function sizeofthe() {
+                hi.style.fontSize = `${size}px`;
+            }
+        }
+        const btn = document.querySelector('.btn');
+        let size50 = setSize(50)
+        btn.addEventListener('click', () => size())
+
+    </script>
+</body>
+
+</html>
