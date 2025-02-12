@@ -1,0 +1,113 @@
+
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .tree {
+  padding: 20px;
+}
+
+.node {
+  padding: 10px;
+  margin: 5px;
+  border: 2px solid #333;
+  cursor: pointer;
+  background: #fff;
+}
+
+.selected {
+  background: #b3e5fc;
+  border-color: #039be5;
+}
+
+.children {
+  margin-left: 30px;
+  border-left: 2px dashed #ccc;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        <div class="controls">
+          <button onclick="addChild()">Add Child</button>
+          <button onclick="addSibling('after')">Add Next Sibling</button>
+          <button onclick="addSibling('before')">Add Prev Sibling</button>
+          <button onclick="removeNode()">Remove Node</button>
+        </div>
+        
+        <div id="tree" class="tree">
+          <div class="node root">Root</div>
+        </div>
+      </div>
+<script>
+    let selectedNode = null;
+
+// Initialize tree
+document.querySelectorAll('.node').forEach(node => {
+  node.addEventListener('click', handleNodeClick);
+});
+
+function handleNodeClick(e) {
+  // Clear previous selection
+  document.querySelectorAll('.node').forEach(n => n.classList.remove('selected'));
+  
+  // Set new selection
+  selectedNode = e.target;
+  selectedNode.classList.add('selected');
+  e.stopPropagation();
+}
+
+// Add child node
+function addChild() {
+  if (!selectedNode) return;
+
+  const childrenContainer = selectedNode.nextElementSibling || createChildrenContainer();
+  const newNode = createNode('Child');
+
+  if (!selectedNode.nextElementSibling) {
+    selectedNode.parentNode.insertBefore(childrenContainer, selectedNode.nextSibling);
+  }
+  childrenContainer.appendChild(newNode);
+}
+
+// Add sibling node
+function addSibling(position) {
+  if (!selectedNode || selectedNode.classList.contains('root')) return;
+
+  const newNode = createNode('Sibling');
+  position === 'after' 
+    ? selectedNode.parentNode.insertBefore(newNode, selectedNode.nextSibling)
+    : selectedNode.parentNode.insertBefore(newNode, selectedNode);
+}
+
+// Remove node
+function removeNode() {
+  if (!selectedNode || selectedNode.classList.contains('root')) return;
+  
+  const parent = selectedNode.parentNode;
+  parent.removeChild(selectedNode);
+  selectedNode = null;
+}
+
+// Helper: Create node element
+function createNode(text) {
+  const node = document.createElement('div');
+  node.className = 'node';
+  node.textContent = text;
+  node.addEventListener('click', handleNodeClick);
+  return node;
+}
+
+// Helper: Create children container
+function createChildrenContainer() {
+  const div = document.createElement('div');
+  div.className = 'children';
+  return div;
+}
+</script>    
+  </body>
+  </html>

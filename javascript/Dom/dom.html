@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" id="meta-charset" class="meta-demo">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" id="meta-viewport" class="meta-demo">
+  <meta name="description" content="Demo page containing various HTML tags and attributes (id &amp; class)" id="meta-description" class="meta-demo">
+  <title id="page-title" class="title-demo">HTML Tags and Attributes Demo</title>
+  <link rel="stylesheet" href="styles.css" id="stylesheet-link" class="link-demo">
+  <style id="internal-style" class="style-demo">
+    /* Inline CSS for demonstration */
+    body.demo { font-family: Arial, sans-serif; line-height: 1.6; }
+    .demo { border: 1px dashed #888; padding: 8px; margin: 8px; }
+    #header { background-color: #f0f0f0; }
+  </style>
+  <script id="internal-script" class="script-demo">
+    // Inline JavaScript for demonstration
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log("Page loaded: HTML Tags and Attributes Demo");
+    });
+  </script>
+</head>
+<body id="main-body" class="demo">
+  <!-- Header Section -->
+  <header id="header" class="demo">
+    <h1 id="main-title" class="demo">HTML Tags and Attributes Demo</h1>
+    <nav id="main-nav" class="demo">
+      <ul id="nav-list" class="demo">
+        <li id="nav-item-1" class="demo"><a href="#section1" id="nav-link-1" class="demo">Section 1</a></li>
+        <li id="nav-item-2" class="demo"><a href="#section2" id="nav-link-2" class="demo">Section 2</a></li>
+        <li id="nav-item-3" class="demo"><a href="#section3" id="nav-link-3" class="demo">Section 3</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main id="content" class="demo">
+    <!-- Section 1: Text Elements -->
+    <section id="section1" class="demo">
+      <h2 id="section1-heading" class="demo">Section 1: Text Elements</h2>
+      <p id="paragraph1" class="demo">
+        This is a paragraph with some <strong id="strong-text" class="demo">strong</strong> and
+        <em id="emphasized-text" class="demo">emphasized</em> text.
+      </p>
+      <blockquote id="blockquote" class="demo">
+        This is a blockquote element.
+      </blockquote>
+      <pre id="preformatted" class="demo">
+Preformatted text example:
+Line 1
+Line 2
+Line 3
+      </pre>
+      <code id="code-block" class="demo">console.log("Hello, World!");</code>
+      <p id="abbr-paragraph" class="demo">
+        HTML stands for <abbr title="HyperText Markup Language" id="html-abbr" class="demo">HTML</abbr>.
+      </p>
+      <p id="mark-example" class="demo">
+        This is <mark id="marked-text" class="demo">highlighted</mark> text.
+      </p>
+      <p id="var-example" class="demo">
+        Variable example: <var id="variable" class="demo">x</var>
+      </p>
+      <p id="bdi-bdo-example" class="demo">
+        Bi-directional: <bdi id="bdi-element" class="demo">isolated text</bdi> and
+        <bdo id="bdo-element" class="demo" dir="rtl">reversed text</bdo>
+      </p>
+      <p id="sup-sub" class="demo">
+        Superscript: E = mc<sup id="superscript" class="demo">2</sup> and Subscript: H<sub id="subscript" class="demo">2</sub>O.
+      </p>
+      <p id="small-text" class="demo">
+        <small id="small-element" class="demo">This is small text.</small>
+      </p>
+      <p id="underline-text" class="demo">
+        <u id="underlined" class="demo">Underlined text example.</u>
+      </p>
+      <p id="samp-example" class="demo">
+        Sample output: <samp id="samp-element" class="demo">Result</samp>
+      </p>
+      <p id="time-example" class="demo">
+        Current date: <time datetime="2025-02-12" id="time-element" class="demo">February 12, 2025</time>
+      </p>
+    </section>
+
+    <!-- Section 2: Media and Interactive Elements -->
+    <section id="section2" class="demo">
+      <h2 id="section2-heading" class="demo">Section 2: Media and Interactive Elements</h2>
+      <figure id="figure-element" class="demo">
+        <img id="sample-image" class="demo" src="https://via.placeholder.com/150" alt="Placeholder Image">
+        <figcaption id="figcaption-element" class="demo">Figure caption text.</figcaption>
+      </figure>
+      <video id="video-element" class="demo" width="320" height="240" controls>
+        <source id="video-source" class="demo" src="movie.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <audio id="audio-element" class="demo" controls>
+        <source id="audio-source" class="demo" src="audio.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+      <canvas id="canvas-element" class="demo" width="200" height="100"></canvas>
+      <meter id="meter-element" class="demo" value="0.6" min="0" max="1">60%</meter>
+      <progress id="progress-element" class="demo" value="70" max="100">70%</progress>
+    </section>
+
+    <!-- Section 3: Forms, Tables, and More -->
+    <section id="section3" class="demo">
+      <h2 id="section3-heading" class="demo">Section 3: Forms, Tables, and More</h2>
+      <form id="demo-form" class="demo" action="#" method="post">
+        <fieldset id="form-fieldset" class="demo">
+          <legend id="form-legend" class="demo">Form Example</legend>
+          <label for="text-input" id="label-text" class="demo">Text Input:</label>
+          <input type="text" id="text-input" class="demo" name="text-input" placeholder="Enter text">
+          <br>
+          <label for="select-input" id="label-select" class="demo">Select Option:</label>
+          <select id="select-input" class="demo" name="select-input">
+            <option id="option1" class="demo" value="1">Option 1</option>
+            <option id="option2" class="demo" value="2">Option 2</option>
+            <option id="option3" class="demo" value="3">Option 3</option>
+          </select>
+          <br>
+          <label for="textarea-input" id="label-textarea" class="demo">Textarea:</label>
+          <textarea id="textarea-input" class="demo" name="textarea" rows="4" cols="50">Sample text...</textarea>
+          <br>
+          <label for="browser-input" id="label-datalist" class="demo">Choose a browser:</label>
+          <input list="browsers" id="browser-input" class="demo" name="browser">
+          <datalist id="browsers" class="demo">
+            <option id="browser-chrome" class="demo" value="Chrome">
+            <option id="browser-firefox" class="demo" value="Firefox">
+            <option id="browser-safari" class="demo" value="Safari">
+            <option id="browser-edge" class="demo" value="Edge">
+          </datalist>
+          <br>
+          <button type="submit" id="submit-button" class="demo">Submit</button>
+        </fieldset>
+      </form>
+
+      <table id="demo-table" class="demo" border="1">
+        <caption id="table-caption" class="demo">Sample Table</caption>
+        <thead id="table-head" class="demo">
+          <tr id="table-header-row" class="demo">
+            <th id="header-cell-1" class="demo">Header 1</th>
+            <th id="header-cell-2" class="demo">Header 2</th>
+            <th id="header-cell-3" class="demo">Header 3</th>
+          </tr>
+        </thead>
+        <tbody id="table-body" class="demo">
+          <tr id="table-row-1" class="demo">
+            <td id="row1-col1" class="demo">Row 1, Col 1</td>
+            <td id="row1-col2" class="demo">Row 1, Col 2</td>
+            <td id="row1-col3" class="demo">Row 1, Col 3</td>
+          </tr>
+          <tr id="table-row-2" class="demo">
+            <td id="row2-col1" class="demo">Row 2, Col 1</td>
+            <td id="row2-col2" class="demo">Row 2, Col 2</td>
+            <td id="row2-col3" class="demo">Row 2, Col 3</td>
+          </tr>
+        </tbody>
+        <tfoot id="table-foot" class="demo">
+          <tr id="table-footer-row" class="demo">
+            <td id="footer-cell" class="demo" colspan="3">Table Footer</td>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+  </main>
+
+  <!-- Aside Section -->
+  <aside id="sidebar" class="demo">
+    <h2 id="aside-heading" class="demo">Aside Section</h2>
+    <p id="aside-paragraph" class="demo">Additional information can be placed here.</p>
+    <details id="details-element" class="demo">
+      <summary id="summary-element" class="demo">More Details</summary>
+      <p id="details-paragraph" class="demo">Detailed info within the details element.</p>
+    </details>
+  </aside>
+
+  <!-- Footer Section -->
+  <footer id="footer" class="demo">
+    <p id="footer-text" class="demo">&copy; 2025 HTML Demo. All rights reserved.</p>
+  </footer>
+</body>
+</html>
