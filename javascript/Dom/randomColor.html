@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            /* box-sizing: border-box; */
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random changer</title>
+</head>
+<body style="width: 100vw; height: 100vh;">
+    <h1><center>Random Color Changer</center></h1>
+    <div class="parent">
+        <button class="start">start</button>
+        <button class="stop">stop</button>
+            <p class="display"></p>
+    </div>
+</body>
+<script>
+
+  let start = document.querySelector('.start');
+let stop = document.querySelector('.stop')
+  let arr =  document.querySelectorAll('button')
+  let display =  document.querySelector('.display')
+
+  arr.forEach((ele)=>{
+    let color = ele.innerHTML.toLowerCase()
+    ele.style.backgroundColor = color
+    ele.style.padding = '10px 5px'
+    ele.style.border = '1px solid black'
+    ele.style.height = '50px'
+    ele.style.width = '100px'
+    ele.style.margin= '10px'
+})
+let ref;
+function generateColor(){
+     ref = setInterval(() => {
+        let colHash ='1234567890abcdef'
+        let col='#'
+            
+            for(let i =0;i<6;i++){
+                let id = (Math.floor(Math.random()*16))
+                col+=colHash[id]
+                
+            }
+            display.innerHTML = col
+            document.body.style.backgroundColor=col
+            start.setAttribute('disabled','')
+
+    }, 1000);
+}
+
+function stopGenerating(){
+    clearInterval(ref)
+    ref = null
+    start.removeAttribute('disabled')
+}
+start.addEventListener('click',generateColor)
+stop.addEventListener('click',stopGenerating)
+
+
+
+</script>
+</html>

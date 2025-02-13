@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color changer</title>
+</head>
+<body>
+    <h1><center>Color Changer</center></h1>
+    <div class="parent">
+        <div class="child">Yellow</div>
+        <div class="child">Blue</div>
+        <div class="child">Green</div>
+        <div class="child">Red</div>
+        <div class="child">Random color</div>
+    </div>
+</body>
+<script>
+  const parent  =   document.querySelector('.parent').children
+  const arr = Array.from(parent)
+  arr.forEach((ele)=>{
+    let color = ele.innerHTML.toLowerCase()
+    ele.style.backgroundColor = color
+    ele.style.padding = '50px'
+    ele.style.border = '1px solid black'
+    ele.style.height = '100px'
+    ele.style.width = '100px'
+})
+arr.forEach((ele)=>{
+    ele.addEventListener('click',(e)=>{
+        // e.stopPropagation()
+        // console.log(ele)
+        // console.log(e.target)
+        let col ='#'
+        if(ele.innerText === 'Random color'){
+            let colHash ='1234567890abcdef'
+            
+            for(let i =0;i<6;i++){
+                let id = (Math.ceil(Math.random()*16))
+                col+=colHash[id]
+                
+            }
+            
+            console.log(col)
+            document.body.style.backgroundColor = col
+        }else{
+
+            document.body.style.backgroundColor = ele.textContent
+        }
+            // let ref = setTimeout((e)=>{
+            //     document.body.style.backgroundColor = ''
+            //     clearTimeout(ref)
+            // },2000)
+    })
+})
+</script>
+</html>
