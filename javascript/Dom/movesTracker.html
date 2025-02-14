@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Position Tracker</title>
+    <style>
+          .circle {
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            pointer-events: none; /* Prevents interfering with clicks */
+            transition: transform 0.05s ease-out; /* Smooth movement */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Mouse Position Tracker</h1>
+    <p class="position">Move your mouse to see the coordinates.</p>
+    <div class="circle"></div>
+    <script>
+        const circle = document.querySelector('.circle');
+        document.addEventListener("mousemove", (event) => {
+            const x = event.clientX; 
+            const y = event.clientY; 
+            circle.style.left = `${x}px`;
+            circle.style.top = `${y}px`;
+            document.querySelector('.position').textContent = `Mouse Position: X = ${x}, Y = ${y}`;
+        });
+    </script>
+
+</body>
+</html>

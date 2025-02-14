@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypeWriter Game</title>
+    <style>
+        body {
+            background-color: #212121;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        .word-container {
+            font-size: 24px;
+            margin-top: 20px;
+            letter-spacing: 2px;
+        }
+        .typed {
+            color: green;
+        }
+        .wrong {
+            color: red;
+        }
+        .cursor {
+            border-bottom: 2px solid white;
+        }
+        .stats {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>TypeWriter Game</h1>
+    <p class="word-container"></p>
+    <div class="stats">
+        <p>Time: <span id="time">0</span> sec</p>
+        <p>Speed: <span id="wpm">0</span> WPM</p>
+        <p>Accuracy: <span id="accuracy">100</span>%</p>
+    </div>
+
+    <script>
+        let arr = "abcdefghijklmnopqrstuvwxyz ";
+        let word = "";
+        let wordContainer = document.querySelector('.word-container');
+        let typedIndex = 0;
+        let totalTyped = 0;
+        let correctTyped = 0;
+        let startTime = null;
+        let timerInterval;
+
+        // Generate a random sequence of letters with spaces every 5 letters
+        for (let i = 0; i < 100; i++) {
+            let index = Math.floor(Math.random() * 26);
+            if (i % 5 === 0 && i !== 0) {
+                word += " "; // Add space after every 5 letters
+            }
+            word += arr[index];
+        }
+        
+        console.log(word);
+        wordContainer.innerHTML = `<span class="cursor">${word[0]}</span>` + word.slice(1);
+
+        function updateStats() {
+            let elapsedTime = (Date.now() - startTime) / 1000; // Convert to seconds
+            document.getElementById('time').textContent = elapsedTime.toFixed(1);
+
+            let wpm = ((correctTyped / 5) / (elapsedTime / 60)).toFixed(2); // 5 chars = 1 word
+            document.getElementById('wpm').textContent = wpm > 0 ? wpm : 0;
+
+            let accuracy = ((correctTyped / totalTyped) * 100).toFixed(2);
+            document.getElementById('accuracy').textContent = accuracy > 0 ? accuracy : 0;
+        }
+
+        window.addEventListener('keydown', (e) => {
+            e.preventDefault();
+
+            if (!startTime) {
+                startTime = Date.now();
+                timerInterval = setInterval(updateStats, 100);
+            }
+
+            let spans = wordContainer.querySelectorAll('span');
+            let correctChar = word[typedIndex];
+
+            // Handle Backspace
+            if (e.key === "Backspace" && typedIndex > 0) {
+                spans[typedIndex - 1].classList.remove("typed", "wrong");
+                spans[typedIndex - 1].classList.add("cursor");
+                spans[typedIndex]?.classList.remove("cursor");
+                typedIndex--;
+                totalTyped--;
+                updateStats();
+                return;
+            }
+
+            // Ignore non-character keys
+            if (e.key.length > 1) return;
+
+            totalTyped++;
+
+            // Prevent typing if incorrect character is entered
+            if (e.key !== correctChar) {
+                spans[typedIndex].classList.add("wrong");
+                updateStats();
+                return;
+            }
+
+            // Correct character typed
+            spans[typedIndex].classList.remove("cursor", "wrong");
+            spans[typedIndex].classList.add("typed");
+            correctTyped++;
+            typedIndex++;
+
+            // Move cursor to the next letter
+            if (typedIndex < word.length) {
+                spans[typedIndex].classList.add("cursor");
+            } else {
+                clearInterval(timerInterval); // Stop timer
+            }
+
+            updateStats();
+        });
+
+        // Wrap each letter in a <span>
+        function wrapLetters() {
+            wordContainer.innerHTML = word.split('').map((char, i) => 
+                `<span${i === 0 ? ' class="cursor"' : ''}>${char}</span>`
+            ).join('');
+        }
+
+        wrapLetters();
+    </script>
+</body>
+</html>

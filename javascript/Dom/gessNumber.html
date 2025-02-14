@@ -116,8 +116,84 @@ p {
 
 
 <script>
+    const form = document.querySelector('.form')
+    const mes = document.querySelector('.lowOrHi')
+    const guess = document.querySelector('.guesses')
+    const remining = document.querySelector('.lastResult')
+    const wrapper = document.querySelector('#wrapper')
+    let attempts, prev, randomNumber;
     
+    function reset(){
+      attempts=10;
+      pre = "";
+      remining.innerHTML = 10
+      mes.innerHTML = null;
+      guess.innerHTML = null
+      randomNumber = Math.floor(Math.random()*100)+1
+      document.querySelector('.guessField').value = ''
+
+      const startButton = document.getElementById("start");
+     if (startButton) {
+        startButton.remove();
+       }
+
+    }
+    reset()
+    
+
+    form.addEventListener('submit',validate)
+    function validate(e){
+      e.preventDefault()
+      const input = parseInt(document.querySelector('.guessField').value)
+      if(isNaN(input) || input >100&&input <0){
+        mes.innerHTML = "Enter Appropriate input "
+      }
+      console.log(randomNumber)
+     
+      if(input>randomNumber){
+        pre+=`${input} `
+        guess.innerHTML = pre
+        attempts-=1
+        remining.innerHTML = attempts
+        mes.innerHTML= "Number is smaller"
+        document.querySelector('.guessField').value = ''
+      }else if(input === randomNumber){
+        pre+=`${input} `
+        guess.innerHTML = pre
+        attempts-=1
+        remining.innerHTML = attempts
+        mes.innerHTML= `congragulation you guessed it right in ${10-attempts} attempts `
+        createNewGame()
+
+      }else{
+        pre+=`${input} `
+        guess.innerHTML = pre
+        attempts-=1
+        remining.innerHTML = attempts
+        mes.innerHTML= "Number is Larger"
+        document.querySelector('.guessField').value = ''
+      }
+      if(attempts ==0){
+        mes.innerHTML =`Game , Over the number was ${randomNumber}`
+        createNewGame()
+        return
+      }
+
+    }
+
+    function createNewGame(){
+     let div = document.createElement('div')
+     div.innerHTML = 'Start New Game'
+     div.id = "start"
+     wrapper.appendChild(div) 
+     div.addEventListener('click',(e)=>{
+      e.preventDefault()
+      reset()
+      
+    })
+    }
 </script>
+
 
     
 </body>

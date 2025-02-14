@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Event Listeners Examples</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    section { margin-bottom: 40px; padding: 10px; border: 1px solid #ccc; }
+    h2 { margin-top: 0; }
+    .box {
+      width: 100px;
+      height: 100px;
+      background: #4caf50;
+      color: white;
+      line-height: 100px;
+      text-align: center;
+      margin: 10px;
+      user-select: none;
+    }
+    #dropZone {
+      width: 150px;
+      height: 150px;
+      border: 2px dashed #555;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>All Event Listeners Examples</h1>
+  
+  <!-- Section 1: Mouse Events -->
+  <section id="mouseEvents">
+    <h2>Mouse Events</h2>
+    <button id="clickBtn">Click Me</button>
+    <p id="mouseMsg">Mouse Event Messages will appear here.</p>
+    <div id="mouseArea" style="width:300px;height:100px;background:#f0f0f0;margin-top:10px;">
+      Move your mouse over this area.
+    </div>
+  </section>
+  
+  <!-- Section 2: Keyboard Events -->
+  <section id="keyboardEvents">
+    <h2>Keyboard Events</h2>
+    <input type="text" id="keyInput" placeholder="Type something..." />
+    <p id="keyMsg">Key event messages will appear here.</p>
+  </section>
+  
+  <!-- Section 3: Form Events -->
+  <section id="formEvents">
+    <h2>Form Events</h2>
+    <form id="demoForm">
+      <input type="text" id="formInput" placeholder="Enter text" required />
+      <button type="submit">Submit</button>
+    </form>
+    <p id="formMsg">Form event messages will appear here.</p>
+  </section>
+  
+  <!-- Section 4: Window Events -->
+  <section id="windowEvents">
+    <h2>Window Events</h2>
+    <p id="windowMsg">Window event messages will appear here.</p>
+  </section>
+  
+  <!-- Section 5: Clipboard Events -->
+  <section id="clipboardEvents">
+    <h2>Clipboard Events</h2>
+    <textarea id="clipArea" rows="3" cols="30" placeholder="Copy, Cut, or Paste text here"></textarea>
+    <p id="clipboardMsg">Clipboard event messages will appear here.</p>
+  </section>
+  
+  <!-- Section 6: Drag & Drop Events -->
+  <section id="dragDropEvents">
+    <h2>Drag & Drop Events</h2>
+    <div id="dragItem" class="box" draggable="true">Drag me</div>
+    <div id="dropZone">Drop Here</div>
+    <p id="dragMsg">Drag & Drop messages will appear here.</p>
+  </section>
+  
+  <!-- Section 7: Touch Events -->
+  <section id="touchEvents">
+    <h2>Touch Events</h2>
+    <div id="touchBox" class="box" style="background:#ff5722;">Touch me</div>
+    <p id="touchMsg">Touch event messages will appear here.</p>
+  </section>
+  
+  <script>
+    // Section 1: Mouse Events
+    const clickBtn = document.getElementById('clickBtn');
+    const mouseMsg = document.getElementById('mouseMsg');
+    const mouseArea = document.getElementById('mouseArea');
+    
+    clickBtn.addEventListener('click', () => {
+      mouseMsg.textContent = "Button clicked!";
+    });
+    
+    mouseArea.addEventListener('mousemove', (e) => {
+      mouseMsg.textContent = `Mouse moved at (${e.clientX}, ${e.clientY})`;
+    });
+    
+    mouseArea.addEventListener('mouseover', () => {
+      mouseMsg.textContent = "Mouse entered the area.";
+    });
+    
+    mouseArea.addEventListener('mouseout', () => {
+      mouseMsg.textContent = "Mouse left the area.";
+    });
+    
+    mouseArea.addEventListener('mousedown', () => {
+      mouseMsg.textContent = "Mouse button pressed down.";
+    });
+    
+    mouseArea.addEventListener('mouseup', () => {
+      mouseMsg.textContent = "Mouse button released.";
+    });
+    
+    // Section 2: Keyboard Events
+    const keyInput = document.getElementById('keyInput');
+    const keyMsg = document.getElementById('keyMsg');
+    
+    keyInput.addEventListener('keydown', (e) => {
+      keyMsg.textContent = `Key Down: ${e.key}`;
+    });
+    
+    keyInput.addEventListener('keyup', (e) => {
+      keyMsg.textContent = `Key Up: ${e.key}`;
+    });
+    
+    // Section 3: Form Events
+    const demoForm = document.getElementById('demoForm');
+    const formInput = document.getElementById('formInput');
+    const formMsg = document.getElementById('formMsg');
+    
+    demoForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      formMsg.textContent = `Form submitted with value: "${formInput.value}"`;
+    });
+    
+    formInput.addEventListener('input', () => {
+      formMsg.textContent = `Input event: ${formInput.value}`;
+    });
+    
+    formInput.addEventListener('focus', () => {
+      formMsg.textContent = "Input field focused.";
+    });
+    
+    formInput.addEventListener('blur', () => {
+      formMsg.textContent = "Input field lost focus.";
+    });
+    
+    // Section 4: Window Events
+    const windowMsg = document.getElementById('windowMsg');
+    
+    window.addEventListener('load', () => {
+      windowMsg.textContent = "Window loaded.";
+    });
+    
+    window.addEventListener('resize', () => {
+      windowMsg.textContent = "Window resized.";
+    });
+    
+    window.addEventListener('scroll', () => {
+      windowMsg.textContent = "Window scrolled.";
+    });
+    
+    // Section 5: Clipboard Events
+    const clipArea = document.getElementById('clipArea');
+    const clipboardMsg = document.getElementById('clipboardMsg');
+    
+    clipArea.addEventListener('copy', () => {
+      clipboardMsg.textContent = "Text copied.";
+    });
+    
+    clipArea.addEventListener('cut', () => {
+      clipboardMsg.textContent = "Text cut.";
+    });
+    
+    clipArea.addEventListener('paste', () => {
+      clipboardMsg.textContent = "Text pasted.";
+    });
+    
+    // Section 6: Drag & Drop Events
+    const dragItem = document.getElementById('dragItem');
+    const dropZone = document.getElementById('dropZone');
+    const dragMsg = document.getElementById('dragMsg');
+    
+    dragItem.addEventListener('dragstart', (e) => {
+      dragMsg.textContent = "Drag started.";
+      e.dataTransfer.setData('text/plain', e.target.id);
+    });
+    
+    dragItem.addEventListener('drag', () => {
+      dragMsg.textContent = "Dragging...";
+    });
+    
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault(); // Allow drop
+      dragMsg.textContent = "Dragging over drop zone.";
+    });
+    
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dragMsg.textContent = "Dropped!";
+      const data = e.dataTransfer.getData('text/plain');
+      const draggedElement = document.getElementById(data);
+      dropZone.appendChild(draggedElement);
+    });
+    
+    // Section 7: Touch Events
+    const touchBox = document.getElementById('touchBox');
+    const touchMsg = document.getElementById('touchMsg');
+    
+    touchBox.addEventListener('touchstart', (e) => {
+      touchMsg.textContent = "Touch started.";
+    });
+    
+    touchBox.addEventListener('touchmove', (e) => {
+      touchMsg.textContent = "Touch moving.";
+    });
+    
+    touchBox.addEventListener('touchend', (e) => {
+      touchMsg.textContent = "Touch ended.";
+    });
+  </script>
+</body>
+</html>
