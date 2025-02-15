@@ -1,3 +1,5 @@
+
+
 const randomWords = [
     "apple", "banana", "cherry", "dog", "elephant", "flower", "guitar", "house", "ice", "jungle",
     "kite", "lemon", "mountain", "notebook", "ocean", "pencil", "queen", "rain", "sunset", "tree",
@@ -27,6 +29,8 @@ const randomWords = [
   
 let done = document.querySelector('#done')
 let newstart = document.getElementById('newstart')
+let history = document.querySelector('#history')
+let clear = document.getElementById('clear')
  // initial loading screen 
  window.addEventListener("load", () => {
     const loader = document.getElementById("loader");
@@ -37,6 +41,7 @@ let newstart = document.getElementById('newstart')
             loader.style.display = "none";
              document.body.style.removeProperty('background-color')
             content.classList.remove("hidden");
+            listAllHistory()
         },3000); 
     });
 
@@ -48,6 +53,9 @@ let newstart = document.getElementById('newstart')
     let correctTyped = 0;
     let startTime = null;
     let timerInterval;
+    let elapsedTime;
+    let wpm
+    let accuracy;
     const rangeValue = document.getElementById('rangeValue')
     const rangeSelect = document.getElementById('rangeSelect')
     let textToType = document.querySelector('#textToType')
@@ -55,7 +63,7 @@ let newstart = document.getElementById('newstart')
     // taking user input on number of words
     rangeSelect.addEventListener('input',(e)=>{
         e.preventDefault()
-        let wordsLength = Number(e.target.value)
+         wordsLength = Number(e.target.value)
         rangeValue.innerHTML = wordsLength
         words = ''
         generatorRandomWords(wordsLength)
@@ -63,14 +71,29 @@ let newstart = document.getElementById('newstart')
       
     })
 
+    clear.addEventListener('click',(e)=>{
+        e.preventDefault()
+        let historyData = localStorage.getItem('history')
+        let historyArry = historyData? JSON.parse(historyData) :[]
+        if(!historyArry.length){
+            return
+        }
+        let conformation = confirm('Are you sure to remove the History')
+        if(conformation){
+            localStorage.clear('history')
+            history.innerHTML=null
+        }
+
+    })
+
     function updateStats(){
-        let elapsedTime =startTime? (Date.now()-startTime)/1000 :0
+         elapsedTime =startTime? (Date.now()-startTime)/1000 :0
         document.getElementById('time').textContent = elapsedTime.toFixed(1)
         
-        let wpm = ((correctTyped/5)/(elapsedTime/60)).toFixed(2)
+        wpm = ((correctTyped/5)/(elapsedTime/60)).toFixed(2)
         document.getElementById('wpm').textContent = wpm > 0 ? wpm : 0;
 
-        let accuracy = ((correctTyped / totalTyped) * 100).toFixed(2);
+        accuracy = ((correctTyped / totalTyped) * 100).toFixed(2);
         document.getElementById('accuracy').textContent = accuracy > 0 ? accuracy : 0;
      
     }
@@ -150,12 +173,14 @@ let newstart = document.getElementById('newstart')
             spans[typedIndex].classList.add("cursor");
        
                 
-                
+            updateStats()
             } else {
                 done.classList.remove('hidden')
                 initConfetti();
                 drawConfetti();
                 clearInterval(timerInterval); // Stop timer
+                updateStats()
+                AddToHistory(elapsedTime,wpm,accuracy,wordsLength)
                 textToType.innerHTML = ''
                 setTimeout(() => {
                 done.classList.add('hidden')
@@ -163,7 +188,6 @@ let newstart = document.getElementById('newstart')
                 }, 5000);
 
             }
-            updateStats()
 
     })
 
@@ -172,6 +196,39 @@ let newstart = document.getElementById('newstart')
         textToType.innerHTML =''
         generatorRandomWords(10)
     })
+
+    function AddToHistory(time,speed,accuracy,wordsLength){
+        let historyData = localStorage.getItem('history')
+        let historyArry = historyData? JSON.parse(historyData) :[]
+        let now = new Date()
+        let DateAndTime = now.toLocaleString()
+        let currentData=  {DateAndTime:DateAndTime,wordsLength:wordsLength,time:time,speed:speed,accuracy:accuracy}
+        historyArry.unshift(currentData)
+        localStorage.setItem("history",JSON.stringify(historyArry))
+        history.innerHTML+=`  <tr>
+         <td class="border px-4 py-2">${DateAndTime}</td>
+        <td class="border px-4 py-2">${wordsLength}</td>
+        <td class="border px-4 py-2">${time}</td>
+        <td class="border px-4 py-2">${speed}</td>
+        <td class="border px-4 py-2">${accuracy}</td>
+        </tr>`
+        // localStorage.setItem("history",[{wordsLength:wordsLength,time:time,speed:speed,accuracy:accuracy}])
+
+    }
+
+    function listAllHistory(){
+        let historyData = localStorage.getItem('history')
+        let historyArry = historyData? JSON.parse(historyData) :[]
+        let final = historyArry.map((data)=>`<tr>
+            <td class="border px-4 py-2">${DateAndTime}</td>
+        <td class="border px-4 py-2">${data.wordsLength}</td>
+        <td class="border px-4 py-2">${data.time}</td>
+        <td class="border px-4 py-2">${data.speed}</td>
+        <td class="border px-4 py-2">${data.accuracy}</td>
+        </tr>`).join('')
+
+        history.innerHTML=final
+    }
   
 
     const canvas = document.getElementById("confettiCanvas");

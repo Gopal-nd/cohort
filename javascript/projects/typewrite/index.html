@@ -50,10 +50,28 @@
             <p>Accuracy: <span id="accuracy">100</span>%</p>
         </div>
         <hr>
-      </div>
-      <script>
-         
-      </script>
+        <div class="flex items-center justify-center flex-col gap-2 p-10">
+            <h1 class="text-center text-2xl text-green-500 font-semibold">Past Games</h1>
+            <table class="border-collapse mb-10">
+              <thead>
+                <tr>
+                  <th class="border px-4 py-2">Date and Time</th>
+                  <th class="border px-4 py-2">Words</th>
+                  <th class="border px-4 py-2">Time(s)</th>
+                  <th class="border px-4 py-2">WPM</th>
+                  <th class="border px-4 py-2">Accuracy</th>
+                </tr>
+              </thead>
+              <tbody id="history">
+                
+              </tbody>
+            </table>
+            <button class="p-4 border text-xl text-green-500 " id="clear">Clear History</button>
+          </div>
+
+        </div>
+        
+       
 </body>
 <script src="index.js"></script>
 </html>
