@@ -1,0 +1,9 @@
+.typed {
+    color: rgb(7, 209, 24);
+}
+.wrong {
+    color: red;
+}
+.cursor {
+    border-bottom: 2px solid white;
+}

@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Frontend heavy TypeWrite App">
+    <meta name="autor" content="Gopal">
+    <title>Type Writer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class=" bg-black font-mono text-white flex justify-center  w-full h-full h-screen">
+    <!-- loader -->
+     <div id="loader" >
+        <img src="./assets/giphy.webp" alt="">
+     </div>
+
+     <!-- main content  -->
+      <div id="content"  class="hidden w-full flex flex-col mt-10 space-y-3 ">
+        <h1 class="text-center font-bold font-mono text-2xl font-sans leading-2 text-green-500 ">Welcome to  <span class="text-green-400 p-1 rounded-[2px] bg-blue-800">Typer</span></h1>
+        <hr>
+        
+        <div class="text-center text-green-500 font-mono">
+
+            <p>choose from the range 1 - 200 words</p>
+            <input id="rangeSelect" class="w-40" type="range" value="10"  min="1" max="200" >
+            <p>Choose Value: 
+                <span id="rangeValue">10</span>
+            </p>
+        </div>
+        <hr>
+<div class="text-center font-mono flex-1 flex flex-col justify-center items-center">
+    <p class="leading-[30px] text-xl " id="textToType"></p>
+    <div id="done" class="hidden flex items-center justify-center flex-col gap-4">
+        <img src="./assets/giphy.gif" class="rounded-full w-40 h-40 "  alt="">
+        <h1 class="text-center text-xl text-green-500">🎉 Congratulations! 🎉</h1>
+        <canvas class="absolute top-0 left-0 pointer-events-none" id="confettiCanvas"></canvas>
+        <button class="z-10 text-green-500 bg-blue-700 p-1 text-xl" id="newstart">New Game</button>
+    </div>
+    
+</div>
+        <hr>
+        
+        <div class="stats text-center text-green-500">
+            <h2 class="mb-5 font-semibold">Performence</h2>
+            <p>Time: <span id="time">0</span> sec</p>
+            <p>Speed: <span id="wpm">0</span> WPM</p>
+            <p>Accuracy: <span id="accuracy">100</span>%</p>
+        </div>
+        <hr>
+      </div>
+      <script>
+         
+      </script>
+</body>
+<script src="index.js"></script>
+</html>

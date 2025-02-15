@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confetti Effect</title>
+    <style>
+        body {
+            /* margin: 0; */
+            overflow: hidden;
+            background: black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="confettiCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById("confettiCanvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let confetti = [];
+
+        function createConfetti() {
+            return {
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                size: Math.random() * 8 + 2,
+                speedY: Math.random() * 3 + 1,
+                speedX: Math.random() * 2 - 1,
+                angle: Math.random() * 360,
+            };
+        }
+
+        function initConfetti() {
+            for (let i = 0; i < 200; i++) {
+                confetti.push(createConfetti());
+            }
+        }
+
+        function drawConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confetti.forEach((c) => {
+                ctx.fillStyle = c.color;
+                ctx.beginPath();
+                ctx.arc(c.x, c.y, c.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Update position
+                c.y += c.speedY;
+                c.x += c.speedX;
+
+                // Reset when confetti falls off
+                if (c.y > canvas.height) {
+                    c.y = -10;
+                    c.x = Math.random() * canvas.width;
+                }
+            });
+
+            requestAnimationFrame(drawConfetti);
+        }
+
+        initConfetti();
+        drawConfetti();
+    </script>
+</body>
+</html>

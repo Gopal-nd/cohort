@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix-style Loader</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        *{
+            margin: 0;
+            border: 0;
+            box-sizing: border-box;
+        }
+        #i {
+            /* ... properties */
+            animation-name: spin;
+            animation-duration: 3s;
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+            animation-direction: alternate;
+            animation-iteration-count: 3;
+            /* animation-timing-function: linear ;  starting speed, middle speed ending speed */
+            animation-timing-function: ease-in-out;
+            animation-delay: 1s;
+            animation-fill-mode: backwards;
+        }
+
+        @keyframes spin {
+            0% {
+                opacity: 0.8;
+                transform: scale(0.8);
+
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1.1);
+                transform: rotate(360deg);
+                border-radius: 50%;
+            }
+        }
+
+        /* Custom animations */
+        @keyframes fadeInZoom {
+            0% {
+                opacity: 0.8;
+                transform: scale(0.95);
+                border-radius: 50%;
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1.5);
+                transform: rotate3d(360deg);
+                border-radius: 50%;
+            }
+        }
+
+        .animate-fadeInZoom {
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+            animation-name: fadeInZoom;
+            animation-duration: 2s;
+            animation-timing-function: ease-in-out;
+            /* animation-delay: 0.5s; */
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+            animation-fill-mode: forwards;
+            animation-play-state: running;
+        }
+
+        .animate-fadeInZoom:hover {
+            animation-play-state: paused;
+        }
+
+
+        /* Loading dots animation */
+        .loading-text {
+            animation-play-state: running;
+        }
+
+        .loading-text:hover {
+            animation-play-state: paused;
+        }
+
+        .loading-text span {
+            animation: blink 1.5s infinite;
+
+        }
+
+        .loading-text span:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .loading-text span:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Loader fade-out effect */
+        /* .fade-out {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        } */
+
+
+        #loader {
+            animation-play-state: running;
+        }
+
+        #loader:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes box {
+            0% {
+                transform: rotateX(0) rotateY(0) rotateZ(0)
+            }
+
+            33% {
+                transform: rotateX(180deg) rotateY(0) rotateZ(0)
+            }
+
+            66% {
+                transform: rotateX(180deg) rotateY(180deg) rotateZ(0)
+            }
+
+            100% {
+                transform: rotateX(180deg) rotateY(180deg) rotateZ(180deg)
+            }
+        }
+
+        #box {
+            animation: box 2s ease-in-out 0s infinite;
+            box-shadow: 0 0 20px blue, 0 0 20px blue inset;
+        }
+    </style>
+</head>
+
+<body class="bg-black text-white max-w-4xl mx-auto w-full h-full h-screen">
+
+    <!-- Loader -->
+    <div id="loader" class="fixed top-0 left-0 w-full h-full bg-black flex flex-col items-center justify-center">
+
+        <!-- <img src="./giphy.gif" 
+             alt="Logo" id="logo" 
+             class="w-60   animate-fadeInZoom"> -->
+
+        <div id="box" class="relative border-4 border-blue-800 p-10
+    shadow-blue-500 shadow-2xl  animate-pulse">
+
+        </div>
+        <h1 class="loading-text mt-10 text-blue-900 text-4xl animate-pulse font-bold">
+            Type Fast        </h1>
+    </div>
+
+
+
+    <!-- Main Content -->
+    <div id="content" class="hidden text-center w-full h-full bg-blue-400 flex flex-col items-center justify-center">
+        <h1 class="text-4xl font-bold">Welcome to My Website</h1>
+    </div>
+
+    <script>
+        window.addEventListener("load", () => {
+            const loader = document.getElementById("loader");
+            const content = document.getElementById("content");
+
+            // setTimeout(() => {
+            //     loader.classList.add("fade-out"); 
+                setTimeout(() => {
+                    loader.style.display = "none";
+                    content.classList.remove("hidden");
+                }, 2000); 
+            // }, 1000); 
+        });
+    </script>
+
+</body>
+
+</html>
