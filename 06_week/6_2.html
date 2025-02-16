@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo Application</title>
+</head>
+<body>
+    <h1>ToDo Application</h1>
+    <input type="text" required placeholder="Enter Your todo..." id="input" >
+    <button id="submit">Add</button>
+    <button id="clear">ClearAll</button>
+    <div>
+        <ul id="todos">
+
+        </ul>
+    </div>
+    <script>
+        let input = document.getElementById('input')
+        let submit = document.getElementById('submit')
+        let todos = document.getElementById('todos')
+        let clear = document.getElementById('clear')
+        clear.addEventListener('click',(e)=>{
+            while (todos.firstChild) {
+             todos.removeChild(todos.firstChild);
+         }
+        })
+
+        submit.addEventListener('click',(e)=>{
+            e.preventDefault()
+            let todo = input.value;
+            if(!todo) return
+            console.log(todo)
+            let li = document.createElement('li')
+            li.innerHTML = `${todo}`
+            let button = document.createElement('button')
+            button.innerHTML = 'X'
+            button.addEventListener('click',(e)=>{
+                e.preventDefault()
+                li.remove()
+            })
+            li.appendChild(button);
+            todos.appendChild(li)
+            input.value = ''
+        })
+    </script>
+</body>
+</html>
