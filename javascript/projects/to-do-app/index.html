@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO App</title>
+    <meta name="description" content="TODO application">
+    <meta name="keywords" content="note it , do it">
+    <meta name="Developer" content="Gopal N D">
+    <!-- og(open graph) tags are used in social media  -->
+    <meta property="og:title" content="TODO application">
+    <meta property="og:description" content="TODO application">
+    <meta property="og:type" content="website" />
+    <!-- website refresh  -->
+    <!-- <meta http-equiv="refresh" content="5" /> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <form id="submit" action="">
+        <input type="text" id="todoTitle" required placeholder="Enter your todo...">
+        <textarea name="" id="todoDescription" placeholder="optional...">
+        </textarea>
+        <input type="submit"  />
+    </form>
+    <ul id="listTodo">
+     <input type="checkbox" >
+    </ul>
+    <script>
+        let num =0;
+        let button = document.querySelector('#submit')
+        let ul = document.querySelector('#listTodo')
+        let todos = []
+
+        button.addEventListener('click',(e)=>{
+            e.preventDefault()
+            let title = document.querySelector('#todoTitle').value
+            let description = document.querySelector('#todoDescription').value
+
+            console.log(title, description)
+            let li = document.createElement('li')
+            li.innerHTML = `
+             <div>
+            <input type="checkbox" >
+            <p>${title}</p>
+        </div>
+        <p>${description}</p>
+        <button id="del">Delete</button>
+        <button id="edit">Edit</button>
+            `
+            ul.appendChild(li)
+        })
+    </script>
+</body>
+</html>
