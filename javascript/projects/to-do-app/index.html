@@ -16,38 +16,94 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <form id="submit" action="">
-        <input type="text" id="todoTitle" required placeholder="Enter your todo...">
-        <textarea name="" id="todoDescription" placeholder="optional...">
-        </textarea>
-        <input type="submit"  />
-    </form>
-    <ul id="listTodo">
-     <input type="checkbox" >
-    </ul>
+    <form id="todoForm" class="flex flex-col gap-2 items-center justify-center mt-10">
+        <input
+          type="text"
+          id="todoTitle"
+          required
+          placeholder="Enter your todo..."
+          class="p-2 border rounded"
+        />
+        <textarea
+          id="todoDescription"
+          placeholder="Optional description..."
+          class="p-2 border rounded"
+        ></textarea>
+        <input
+          type="submit"
+          id="submitButton"
+          value="Add Todo"
+          class="p-2 bg-green-500 text-white rounded cursor-pointer"
+        />
+      </form>
+      <ul id="listTodo" class="flex flex-col gap-4 mt-4 mx-auto w-3/4"></ul>
+    
     <script>
         let num =0;
-        let button = document.querySelector('#submit')
+        let submit = document.querySelector('#submitButton')
+        let todoForm = document.querySelector('#todoForm')
         let ul = document.querySelector('#listTodo')
         let todos = []
 
-        button.addEventListener('click',(e)=>{
+        let isEditing = false
+        let EditElement = null 
+
+        todoForm.addEventListener('submit',(e)=>{
             e.preventDefault()
-            let title = document.querySelector('#todoTitle').value
-            let description = document.querySelector('#todoDescription').value
+            let titleInput = document.querySelector('#todoTitle')
+            let descriptionInput = document.querySelector('#todoDescription')
+            let title = titleInput.value.trim()
+            let description =descriptionInput.value.trim()
+            if(!title || !description)return
 
             console.log(title, description)
+            if(isEditing && EditElement){
+                EditElement.querySelector('.todo-title').textContent = title;
+                EditElement.querySelector('.todo-description').textContent = description
+                isEditing = false;
+                EditElement = null
+                submit.value = 'add todo'
+                document.querySelector('#todoTitle').value = ''
+                document.querySelector('#todoDescription').value =''
+            }else{
+
+            
             let li = document.createElement('li')
-            li.innerHTML = `
-             <div>
-            <input type="checkbox" >
-            <p>${title}</p>
-        </div>
-        <p>${description}</p>
-        <button id="del">Delete</button>
-        <button id="edit">Edit</button>
-            `
+            li.id = num
+            li.dataset.value = num
+            let button = document.createElement('button')
+            button.innerHTML = "remove me "
+            button.classList.add('text-red-400','p-2','border')
+            button.addEventListener('click',(e)=>{
+                e.preventDefault()
+                li.remove()
+            })
+            let tit = document.createElement('p')
+            tit.classList.add('todo-title','p-2')
+            tit.innerHTML = title
+            let des = document.createElement('p')
+            des.classList.add('todo-description','p-2')
+            des.innerHTML = description
+
+            let edit = document.createElement('button')
+            edit.classList.add('text-blue-400','border','p-2')
+            edit.innerHTML = 'edit'
+            edit.addEventListener('click',(e)=>{
+                e.preventDefault()
+                isEditing = true
+                EditElement = li
+                titleInput.value = tit.textContent
+                descriptionInput.value = des.textContent
+                submit.value = 'save'
+            })
+            li.appendChild(edit)
+            li.appendChild(tit)
+            li.appendChild(des)
+            li.appendChild(button)
+            document.querySelector('#todoTitle').value =''
+            document.querySelector('#todoDescription').value = ''
             ul.appendChild(li)
+        }
         })
     </script>
 </body>
