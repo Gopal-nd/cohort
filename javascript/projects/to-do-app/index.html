@@ -36,75 +36,9 @@
           class="p-2 bg-green-500 text-white rounded cursor-pointer"
         />
       </form>
+      <h2 id="todolength"></h2>
       <ul id="listTodo" class="flex flex-col gap-4 mt-4 mx-auto w-3/4"></ul>
     
-    <script>
-        let num =0;
-        let submit = document.querySelector('#submitButton')
-        let todoForm = document.querySelector('#todoForm')
-        let ul = document.querySelector('#listTodo')
-        let todos = []
-
-        let isEditing = false
-        let EditElement = null 
-
-        todoForm.addEventListener('submit',(e)=>{
-            e.preventDefault()
-            let titleInput = document.querySelector('#todoTitle')
-            let descriptionInput = document.querySelector('#todoDescription')
-            let title = titleInput.value.trim()
-            let description =descriptionInput.value.trim()
-            if(!title || !description)return
-
-            console.log(title, description)
-            if(isEditing && EditElement){
-                EditElement.querySelector('.todo-title').textContent = title;
-                EditElement.querySelector('.todo-description').textContent = description
-                isEditing = false;
-                EditElement = null
-                submit.value = 'add todo'
-                document.querySelector('#todoTitle').value = ''
-                document.querySelector('#todoDescription').value =''
-            }else{
-
-            
-            let li = document.createElement('li')
-            li.id = num
-            li.dataset.value = num
-            let button = document.createElement('button')
-            button.innerHTML = "remove me "
-            button.classList.add('text-red-400','p-2','border')
-            button.addEventListener('click',(e)=>{
-                e.preventDefault()
-                li.remove()
-            })
-            let tit = document.createElement('p')
-            tit.classList.add('todo-title','p-2')
-            tit.innerHTML = title
-            let des = document.createElement('p')
-            des.classList.add('todo-description','p-2')
-            des.innerHTML = description
-
-            let edit = document.createElement('button')
-            edit.classList.add('text-blue-400','border','p-2')
-            edit.innerHTML = 'edit'
-            edit.addEventListener('click',(e)=>{
-                e.preventDefault()
-                isEditing = true
-                EditElement = li
-                titleInput.value = tit.textContent
-                descriptionInput.value = des.textContent
-                submit.value = 'save'
-            })
-            li.appendChild(edit)
-            li.appendChild(tit)
-            li.appendChild(des)
-            li.appendChild(button)
-            document.querySelector('#todoTitle').value =''
-            document.querySelector('#todoDescription').value = ''
-            ul.appendChild(li)
-        }
-        })
-    </script>
+   <script src="index.js"></script>
 </body>
 </html>
