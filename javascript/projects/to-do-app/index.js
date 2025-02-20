@@ -10,7 +10,7 @@ let todolength = document.querySelector('#todolength')
 let isEditing = false
 let editId = null 
 let dragable = null
-let dragableIb = null
+let dragableId = null
 
 function updateTodolocalstorage(){
     localStorage.setItem('todolist',JSON.stringify(todos))
@@ -66,8 +66,34 @@ function RenderTodos(){
         li.classList.add('flex','items-ceenter','justify-between','bg-white','p-4','mb-3','rounded','shadow-lg')
         li.dataset.id = todo.id
         
-        // todo dragable
+        li.setAttribute('draggable',true)
+        li.addEventListener('dragstart',(e)=>{
+            dragableId = li.dataset.id
+            e.dataTransfer.dropEffect ='move'
+            // console.log(e.target)
+        })
+        li.addEventListener('dragover',(e)=>{
+            e.preventDefault()
+            e.dataTransfer.dropEffect ='move'
+        })
 
+        li.addEventListener('drop',(e)=>{
+            e.preventDefault()
+            // console.log(e.target.dataset.id)
+            const targetId = li.dataset.id
+            if(dragableId && targetId !==dragableId){
+                const draggedIndex = todos.findIndex(t=>t.id ==dragableId)
+                const dropIndex = todos.findIndex(t=>t.id == targetId)
+                console.log("drageindex",draggedIndex, "dropindex",dropIndex)
+                if(draggedIndex >-1 && dropIndex >-1){
+                    const [drgIndex] = todos.splice(draggedIndex,1)
+                     todos.splice(dropIndex,0,drgIndex)
+                     updateTodolocalstorage()
+                     RenderTodos()
+
+                }
+            }
+        })
         const leftdiv = document.createElement('div')
         leftdiv.classList.add('flex','items-center','gap-3')
         const checkbox = document.createElement('input')
