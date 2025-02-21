@@ -21,11 +21,30 @@
 ---
 
 ### Calculator
-![Calculator](./others/images/calc.png)
+![Calculator](./others/images/calc.png 'Calculator')
 
 [live Demo](https://gopal-nd.github.io/calculator/)
 
 [source code](https://github.com/Gopal-nd/calculator)
+
+---
+
+### ToDo App
+![todo](./others/images/todo.png "todo")
+
+[live Demo](https://gopal-nd.github.io/to-do-app/)
+
+[source code](https://github.com/Gopal-nd/to-do-app)
+
+---
+
+### Weather APP
+
+![weather](./others/images/weather.png "weather")
+
+[live Demo](https://gopal-nd.github.io/weather-app/)
+
+[source code](https://github.com/Gopal-nd/weather-app)
 
 ---
 
