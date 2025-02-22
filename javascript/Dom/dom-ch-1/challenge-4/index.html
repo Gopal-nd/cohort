@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task List Application</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Task List</h1>
+
+    <div class="task-form">
+      <input
+        type="text"
+        id="taskInput"
+        class="task-input"
+        required
+        placeholder="Add a new task..."
+      />
+      <button id="addButton" class="add-button">Add</button>
+    </div>
+
+    <ul id="taskList" class="task-list">
+      <li class="empty-list">No tasks yet. Add one above!</li>
+    </ul>
+
+    <div class="task-stats">
+      <span id="totalTasks">Total tasks: 0</span>
+      <span id="completedTasks">Completed: 0</span>
+    </div>
+    <script>
+      const addButton = document.getElementById('addButton')
+      const taskList = document.getElementById('taskList')
+      const totalTasks = document.getElementById('totalTasks')
+      const completedTasks = document.getElementById('completedTasks')
+      
+      const todos =[]
+      
+      const taskInput = document.getElementById('taskInput')
+      addButton.addEventListener('click',(e)=>{
+        e.preventDefault()
+
+  if (taskInput.value.trim() === "") return;
+
+        todos.push({
+          id:Date.now(),
+          title:taskInput.value,
+          completed:false,
+        })
+        taskInput.value = ''
+        RenderTodos()
+      })
+      function RenderTodos(){
+        taskList.innerHTML=''
+        todos.forEach((todo)=>{
+          
+            
+            const li = document.createElement('li')
+            const p = document.createElement('p')
+            p.innerText = todo.title
+            const input = document.createElement('input')
+            input.type = 'checkbox'
+            input.checked = todo.completed
+            input.addEventListener('change',(e)=>{
+              if(todo.completed){
+                p.style.textDecoration = ""
+                todo.completed = !todo.completed
+              }else{
+                p.style.textDecoration = "line-through"
+                todo.completed = !todo.completed
+              }
+            })
+            const del = document.createElement('button')
+            del.innerHTML = 'delete'
+            del.addEventListener('click',(e)=>{
+              li.remove()
+            })
+            li.appendChild(p)
+            li.appendChild(input)
+            li.appendChild(del)
+            taskList.appendChild(li)
+
+        })
+      }
+    </script>
+  </body>
+</html>

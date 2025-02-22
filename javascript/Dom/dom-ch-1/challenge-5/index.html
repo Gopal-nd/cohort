@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Carousel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+
+    <h1 class="text-2xl font-bold mb-4">Image Carousel</h1>
+
+    <div class="relative w-96 h-56 overflow-hidden">
+      <div class="w-full h-full" id="carouselTrack">
+        <!-- Images will be inserted dynamically -->
+      </div>
+      <div class="absolute bottom-3 left-0 right-0 text-center text-white font-bold" id="caption"></div>
+
+      <button id="prevButton" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white px-3 py-1 rounded">←</button>
+      <button id="nextButton" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white px-3 py-1 rounded">→</button>
+    </div>
+
+    <div class="flex gap-2 mt-4" id="carouselNav">
+      <!-- Indicators will be inserted dynamically -->
+    </div>
+
+    <div class="mt-4">
+      <button id="autoPlayButton" class="px-4 py-2 bg-blue-500 text-white rounded">Start Auto Play</button>
+      <span id="timerDisplay" class="ml-2 text-gray-700"></span>
+    </div>
+    
+    <script>
+const images = [
+  {
+    url: 'https://plus.unsplash.com/premium_photo-1666863909125-3a01f038e71f?q=80&w=1986&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    caption: 'Beautiful Mountain Landscape',
+  },
+  {
+    url: 'https://plus.unsplash.com/premium_photo-1690576837108-3c8343a1fc83?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    caption: 'Ocean Sunset View',
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?q=80&w=2041&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    caption: 'Autumn Forest Path',
+  },
+  {
+    url: 'https://plus.unsplash.com/premium_photo-1680466057202-4aa3c6329758?q=80&w=2138&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    caption: 'Urban City Skyline',
+  },
+];
+
+      const carouselTrack = document.getElementById('carouselTrack'); //image track
+
+      const caption = document.getElementById('caption');  // cPtion terck
+      const prevButton = document.getElementById('prevButton');  
+      const nextButton = document.getElementById('nextButton');
+      const autoPlayButton = document.getElementById('autoPlayButton');
+      const timerDisplay = document.getElementById('timerDisplay'); // time dispaly
+      const carouselNav = document.getElementById('carouselNav'); // nav indicator
+
+      let currentIndex = 0;
+      let autoPlayInterval;
+      let countdown;
+
+      function updateImageCaption(){
+        carouselTrack.innerHTML = `<img src="${images[currentIndex].url}" class="w-full h-full object-cover rounded" alt="Image">`;
+        caption.textContent = images[currentIndex].caption;
+        Display()
+      }
+
+      function Display(){
+        carouselNav.innerHTML = ''
+        images.forEach((_,index)=>{
+          const span = document.createElement('span')
+          span.classList.add('w-5','h-5','rounded-full',currentIndex ===index ?'bg-blue-500':'bg-gray-500')
+          span.addEventListener('click',(e)=>{
+            e.preventDefault()
+            currentIndex = index
+            updateImageCaption()
+          })
+          carouselNav.appendChild(span)
+        })
+      }
+
+      function nextImage(){
+        currentIndex = (currentIndex+1)%images.length
+        updateImageCaption()
+      }
+
+      function prevImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateImageCaption();
+      }
+
+      function toggleAutoPlay(){
+        if (autoPlayInterval) {
+        clearInterval(autoPlayInterval);
+        clearInterval(countdown);
+        autoPlayInterval = null;
+        timerDisplay.textContent = '';
+        autoPlayButton.textContent = 'Start Auto Play';
+      } else {
+        let sec = 5;
+        timerDisplay.textContent = `Next image in ${sec} sec...`;
+
+        countdown = setInterval(() => {
+          sec--;
+          timerDisplay.textContent = `Next image in ${sec} sec...`;
+        }, 1000);
+
+        autoPlayInterval = setInterval(() => {
+          sec = 5; 
+          nextImage();
+          timerDisplay.textContent = `Next image in ${sec} sec...`;
+        }, 5000);
+
+        autoPlayButton.textContent = 'Stop Auto Play';
+      }
+    }
+
+
+      prevButton.addEventListener('click', prevImage);
+      nextButton.addEventListener('click', nextImage);
+      autoPlayButton.addEventListener('click', toggleAutoPlay);
+
+      Display()
+    </script>
+
+  </body>
+</html>
