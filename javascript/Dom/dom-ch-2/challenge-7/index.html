@@ -1,56 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Slick Accordion</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="container">
-      <h2>Simple Accordion</h2>
-      <div class="accordion">
-        <div class="accordion-item">
-          <button class="accordion-button">
-            About Us
-            <span class="arrow">↓</span>
-          </button>
-          <div class="accordion-content">
-            <p>
-              We are a company dedicated to creating amazing web experiences.
-              Our team works tirelessly to bring you the best solutions.
-            </p>
-          </div>
-        </div>
 
-        <div class="accordion-item">
-          <button class="accordion-button">
-            Services
-            <span class="arrow">↓</span>
-          </button>
-          <div class="accordion-content">
-            <p>
-              We offer web design, development, and consulting services to help
-              your business grow online.
-            </p>
-          </div>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Slick Accordion</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
 
-        <div class="accordion-item">
-          <button class="accordion-button">
-            Contact
-            <span class="arrow">↓</span>
-          </button>
-          <div class="accordion-content">
-            <p>
-              Get in touch with us through email or phone. We're always happy to
-              help with your projects.
-            </p>
-          </div>
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #f0f2f5;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #1a1a1a;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    .accordion-item {
+      background: white;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e1e1e1;
+    }
+
+    .accordion-button {
+      width: 100%;
+      padding: 1rem;
+      background: #4a90e2;
+      color: white;
+      border: none;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .accordion-button:hover {
+      background: #357abd;
+    }
+
+    .accordion-content {
+      max-height: 0;
+      padding: 0 1rem;
+      background: white;
+      overflow: hidden;
+      transition: all 0.3s ease-out;
+    }
+
+    .accordion-content p {
+      padding: 1rem 0;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .active .arrow {
+      transform: rotate(180deg);
+    }
+
+    .active .accordion-content {
+      max-height: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Simple Accordion</h2>
+    <div class="accordion">
+      <div class="accordion-item">
+        <button class="accordion-button">
+          About Us
+          <span class="arrow">↓</span>
+        </button>
+        <div class="accordion-content">
+          <p>
+            We are a company dedicated to creating amazing web experiences.
+            Our team works tirelessly to bring you the best solutions.
+          </p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-button">
+          Services
+          <span class="arrow">↓</span>
+        </button>
+        <div class="accordion-content">
+          <p>
+            We offer web design, development, and consulting services to help
+            your business grow online.
+          </p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-button">
+          Contact
+          <span class="arrow">↓</span>
+        </button>
+        <div class="accordion-content">
+          <p>
+            Get in touch with us through email or phone. We're always happy to
+            help with your projects.
+          </p>
         </div>
       </div>
     </div>
+  </div>
 
-    <script src="app.js"></script>
-  </body>
+  <script>
+    const button = document.querySelectorAll('button')
+    Array.from(button)
+    button.forEach((but) => {
+      but.addEventListener('click', () => {
+        const item = but.parentElement;
+        const content = but.nextElementSibling;
+        console.log(item, content)
+        const arrow = but.querySelector(".arrow");
+
+        item.classList.toggle("active");
+
+        // Expand or collapse the accordion
+        if (item.classList.contains("active")) {
+          content.style.maxHeight = content.scrollHeight + "px"; // add the size of the content
+          arrow.textContent = "↓";
+        } else {
+          content.style.maxHeight = null;
+          arrow.textContent = "↑"; // Change arrow direction
+        }
+      })
+    })
+  </script>
+</body>
+
 </html>

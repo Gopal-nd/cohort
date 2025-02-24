@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Memory Card Game</title>
-    <link rel="stylesheet" href="styles.css" />
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
   </head>
   <body>
     <h1>Memory Game</h1>
@@ -14,7 +14,318 @@
     </div>
     <div class="game-container" id="gameContainer"></div>
     <button onclick="restartGame()">Restart Game</button>
+    <style>
+/* General Styling */
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: gray;
+  margin: 0;
+}
 
-    <script src="app.js"></script>
+/* Game Title */
+h1 {
+  font-size: 2em;
+  color: #333;
+}
+
+/* Game Stats */
+.stats {
+  margin: 20px;
+  font-size: 1.2em;
+  color: #555;
+}
+
+/* Game Board */
+.game-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin: 20px;
+  perspective: 1000px;
+}
+
+/* Card Styling */
+.card {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+  cursor: pointer;
+}
+
+/* Card Flip Animation */
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+/* Front and Back of the Card */
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  border-radius: 8px;
+  backface-visibility: hidden;
+}
+
+/* Front of the Card */
+.card-front {
+  background: #2196f3;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+/* Back of the Card (Hidden) */
+.card-back {
+  background: white;
+  border: 2px solid #2196f3;
+}
+
+/* Button Styling */
+button {
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #388e3c;
+}
+
+
+    </style>
+    <!-- <script>
+      const gameContainer = document.getElementById("gameContainer");
+const movesElement = document.getElementById("moves");
+const timeElement = document.getElementById("time");
+
+let cards = [];
+let flippedCards = [];
+let moves = 0;
+let time = 0;
+let timerInterval;
+let matchedPairs = 0;
+let isChecking = false; 
+
+
+const symbols = ["🔥", "🌟", "🍀", "🎵", "🎮", "🚀", "🎨", "💎"];
+const cardValues = [...symbols, ...symbols]; 
+
+
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+// Create the game board
+function createBoard() {
+  gameContainer.innerHTML = "";
+  shuffledCards = shuffle(cardValues);
+
+  shuffledCards.forEach((symbol) => {
+    const card = document.createElement("div");
+    card.classList.add("card");
+    card.innerHTML = `
+      <div class="card-front">${symbol}</div>
+      <div class="card-back"></div>
+    `;
+    card.addEventListener("click", () => flipCard(card, symbol));
+    gameContainer.appendChild(card);
+    cards.push(card);
+  });
+}
+
+// Flip card logic
+function flipCard(card, symbol) {
+  if (isChecking || flippedCards.length === 2 || card.classList.contains("flipped")) {
+    return; 
+  }
+
+  card.classList.add("flipped");
+  flippedCards.push({ card, symbol });
+
+  if (flippedCards.length === 2) {
+    isChecking = true; 
+    setTimeout(checkMatch, 800);
+  }
+}
+
+// Check if two flipped cards match
+function checkMatch() {
+  const [first, second] = flippedCards;
+
+  if (first.symbol === second.symbol) {
+    matchedPairs++;
+    if (matchedPairs === symbols.length) {
+      clearInterval(timerInterval);
+      setTimeout(() => alert(`🎉 You won in ${moves} moves!`), 300);
+    }
+  } else {
+    first.card.classList.remove("flipped");
+    second.card.classList.remove("flipped");
+  }
+
+  flippedCards = [];
+  moves++;
+  movesElement.textContent = moves;
+  isChecking = false; // Enable clicks again
+}
+
+// Timer function
+function startTimer() {
+  time = 0;
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    time++;
+    let minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+    timeElement.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  }, 1000);
+}
+
+
+function restartGame() {
+  moves = 0;
+  matchedPairs = 0;
+  flippedCards = [];
+  cards = [];
+  isChecking = false;
+  movesElement.textContent = "0";
+  timeElement.textContent = "0:00";
+  createBoard();
+  startTimer();
+}
+
+// Initialize game
+createBoard();
+startTimer();
+
+    </script> -->
+
+    <script>
+   const gameContainer = document.getElementById("gameContainer");
+const movesElement = document.getElementById("moves");
+const timeElement = document.getElementById("time");
+
+let cards = [];
+let flippedCards = [];
+let moves = 0;
+let time = 0;
+let timerInterval;
+let matchedPairs = 0;
+let isChecking = false;
+
+const symbols = ["🔥", "🌟", "🍀", "🎵", "🎮", "🚀", "🎨", "💎"];
+const cardValues = [...symbols, ...symbols];
+
+// Shuffle function
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+// Create the game board
+function createBoard() {
+  gameContainer.innerHTML = "";
+  cards = [];
+  flippedCards = [];
+  matchedPairs = 0;
+  moves = 0;
+  movesElement.textContent = moves;
+
+  let shuffledCards = shuffle(cardValues);
+
+  shuffledCards.forEach((symbol) => {
+    const card = document.createElement("div");
+    card.classList.add("card");
+
+    card.innerHTML = `
+      <div class="card-front">${symbol}</div>
+      <div class="card-back"></div>
+    `;
+
+    card.addEventListener("click", () => flipCard(card, symbol));
+
+    gameContainer.appendChild(card);
+    cards.push({ card, symbol, matched: false });
+  });
+
+  startTimer();
+}
+
+// Flip card logic
+function flipCard(cardElement, symbol) {
+  if (isChecking || flippedCards.length === 2 || cardElement.classList.contains("flipped")) {
+    return;
+  }
+
+  cardElement.classList.add("flipped");
+  flippedCards.push({ cardElement, symbol });
+
+  if (flippedCards.length === 2) {
+    isChecking = true;
+    setTimeout(checkMatch, 800);
+  }
+}
+
+// Check if two flipped cards match
+function checkMatch() {
+  const [first, second] = flippedCards;
+
+  if (first.symbol === second.symbol) {
+    matchedPairs++;
+
+    if (matchedPairs === symbols.length) {
+      clearInterval(timerInterval);
+      setTimeout(() => alert(`🎉 You won in ${moves} moves!`), 300);
+    }
+  } else {
+    first.cardElement.classList.remove("flipped");
+    second.cardElement.classList.remove("flipped");
+  }
+
+  flippedCards = [];
+  moves++;
+  movesElement.textContent = moves;
+  isChecking = false;
+}
+
+// Timer function
+function startTimer() {
+  time = 0;
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    time++;
+    let minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+    timeElement.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  }, 1000);
+}
+
+// Restart Game
+function restartGame() {
+  clearInterval(timerInterval);
+  createBoard();
+}
+
+// Initialize game
+createBoard();
+
+
+    </script>
   </body>
 </html>

@@ -58,6 +58,95 @@
       </div>
     </div>
 
-    <script src="app.js"></script>
+
+   
+   <script>
+    const cartItems = document.getElementById('cart-items');
+const cartTotal = document.getElementById('cart-total');
+let allProducts = [];
+
+function addToCart(name, price) {
+  let item = allProducts.find((product) => product.name === name);
+
+  if (item) {
+    item.quantity++;
+  } else {
+    allProducts.push({
+      id: Date.now(),
+      name,
+      price,
+      quantity: 1,
+    });
+  }
+
+  RenderOnScreen();
+}
+
+function RenderOnScreen() {
+  cartItems.innerHTML = ''; // Clear previous items
+
+  if (allProducts.length === 0) {
+    cartItems.innerHTML = '<div class="empty-cart">Cart is empty</div>';
+    cartTotal.innerHTML = 'Total: $0.00';
+    return;
+  }
+
+  let totalPrice = 0;
+
+  allProducts.forEach((item, index) => {
+    const div = document.createElement('div');
+    div.classList.add('cart-item');
+
+    const name = document.createElement('p');
+    name.textContent = item.name;
+
+    const buttonMinus = document.createElement('button');
+    buttonMinus.textContent = '-';
+    buttonMinus.addEventListener('click', () => {
+      if (item.quantity > 1) {
+        item.quantity--;
+      } else {
+        allProducts.splice(index, 1); // Remove item if quantity is 1
+      }
+      RenderOnScreen();
+    });
+
+    const quantity = document.createElement('span');
+    quantity.textContent = item.quantity;
+
+    const buttonPlus = document.createElement('button');
+    buttonPlus.textContent = '+';
+    buttonPlus.addEventListener('click', () => {
+      item.quantity++;
+      RenderOnScreen();
+    });
+
+    const price = document.createElement('span');
+    price.textContent = ` $${(item.quantity * item.price).toFixed(2)}`;
+    totalPrice += item.quantity * item.price;
+
+    const remove = document.createElement('button');
+    remove.textContent = 'Remove';
+    remove.addEventListener('click', () => {
+      allProducts = allProducts.filter((p) => p.name !== item.name);
+      RenderOnScreen();
+    });
+
+    div.appendChild(name);
+    div.appendChild(buttonMinus);
+    div.appendChild(quantity);
+    div.appendChild(buttonPlus);
+    div.appendChild(price);
+    div.appendChild(remove);
+
+    cartItems.appendChild(div);
+    console.log(totalPrice);
+    
+    cartTotal.innerHTML = `Total: $${totalPrice}`;
+  });
+
+}
+
+   </script>
   </body>
 </html>
