@@ -8,14 +8,18 @@
 // pro.then(data =>console.log(data))
 // pro.catch(data=>console.log(data))
 
+
+// promise callback type 
 type TPromiseResolve<T> = (value:T)=>void;
 type TPromiseReject<T> = (value:T)=>void;
 
+
+// user functions type 
 type TPromiseThenCallBack<T> =(value:T|undefined)=>void
 type TPromiseCatchCallBack<T> =(value:T|undefined)=>void
 type TPromiseFinalyCallBack = () => void
 
-
+// ececutable function
 type TPromiseEcecuter<T,K> =(resolve:TPromiseResolve<T>,reject:TPromiseReject<K>)=>void
 
 enum PromiseState {
@@ -25,10 +29,11 @@ enum PromiseState {
 }
 
 class MyPromise<T,K> {
-    private _state :PromiseState = PromiseState.PENDING
-    private _value :T | undefined
-    private _reson :K | undefined
+    private _state :PromiseState = PromiseState.PENDING    // tack status
+    private _value :T | undefined    // track value
+    private _reson :K | undefined    // track reson
 
+    // array to store all the user functions
     private _successCallBackHandlers :TPromiseThenCallBack<T>[] = []
     private _failureCallBackHandlers :TPromiseCatchCallBack<K>[] = []
     private _finallyCallBackHandlers :TPromiseFinalyCallBack | undefined = undefined
