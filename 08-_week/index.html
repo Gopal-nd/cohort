@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form >
+        <input type="text" id="input" placeholder="input hex code">
+        <input type="submit" name="submit" id="submit">
+    </form>
+    <div id="addButtons"></div>
+    
+</body>
+<script>
+
+    let submit = document.querySelector('#submit')
+    let addButtons = document.querySelector('#addButtons')
+    function FilterToHex(val){
+        val = val.trim()
+        if (/^#([0-9A-F]{3}){1,2}$/i.test(val)) {
+            return val 
+        }
+        return val
+    }
+    submit.addEventListener('click',(e)=>{
+        let input = document.querySelector('#input') 
+        e.preventDefault()
+        let val = FilterToHex(input.value)
+        let button = document.createElement('button')
+        button.innerHTML = val
+        addButtons.appendChild(button)
+
+        console.log(val)
+        button.addEventListener('click',buttonHandler(val))
+        input.value =''
+    })
+    function buttonHandler(val){
+      return  (e)=>{
+            e.preventDefault()
+            document.body.style.backgroundColor=val;
+        }
+    }
+
+
+</script>
+</html>
