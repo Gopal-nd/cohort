@@ -1,78 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Projects</title>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban Board</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="flex">
-    <section id="board" class="flex h-[80vh] w-[100vw] gap-2 items-center p-2 text-center">
-        <div id="todo-board" class="bord-items relative border p-2 h-full flex-1 max-w-[400px] ">
-            <h1 class="font-bold text-2xl border-b">Todo</h1>
-            <button id="todo-board-add" class="mb-2 absolute bottom-0">Add</button>
-        </div>
-        <div id="progress-board" class="bord-items border p-2 h-full flex-1  max-w-[400px]">
-            <h1 class="font-bold text-2xl border-b">Progress</h1>
-        </div>
-        <div id="done-board" class="bord-items border p-2 h-full flex-1  max-w-[400px]">
-            <h1 class="font-bold text-2xl border-b">Done</h1>
-        </div>
-    </section>
-    <button id="create" class="self-start">Create</button>
-</body>
-<script>
-    let todoBoardAdd = document.querySelector('#todo-board-add')
-    let board = document.querySelector('#board')
-    todoBoardAdd.addEventListener('click',(e)=>{
-        e.preventDefault()
-        let value =prompt('Enter the todo :')
-        if(!value) return
-        let p = document.createElement('p')
-        p.innerHTML = value
-        p.setAttribute('draggable', true);
-        p.classList.add('border', 'p-2', 'bg-green-200', 'text-xl', 'rounded-md', "hover:bg-green-500", 'cursor-pointer', 'mt-2');
-    
-    
-        let parent = todoBoardAdd.parentElement
-        parent.appendChild(p)
-        p.addEventListener('dragstart',(e)=>{
-            // e.preventDefault()
-            
-            p.classList.add('flying')
-        })
-        p.addEventListener('dragend',()=>{
-            p.classList.remove('flying')
-        })
+<body class="flex flex-col">
+  <!-- Board Container -->
+  <section id="board" class="flex h-[80vh] w-[100vw] gap-2 items-start p-2 text-center overflow-auto"></section>
+  <!-- Button to create new column -->
+  <button id="create" class="self-start mt-4 ml-2 p-2 border rounded">Create Column</button>
 
-    })
-    function DragEnable(){
-        let divs = document.querySelectorAll('.bord-items')
-        divs.forEach(element => {
-            element.addEventListener('dragover',(event)=>{
-                event.preventDefault()
-                let draggedElement = document.querySelector('.flying'); 
-                if (draggedElement) {
-                    element.appendChild(draggedElement); 
-                }
-            })
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadBoardState();
+      attachCreateColumnHandler();
+    });
+
+    // Load the board state from localStorage (or create defaults)
+    function loadBoardState() {
+      const board = document.querySelector('#board');
+      board.innerHTML = "";
+      const stored = localStorage.getItem('kanbanBoard');
+      if (stored) {
+        const state = JSON.parse(stored);
+        state.columns.forEach(col => {
+          board.appendChild(createColumnElement(col.title, col.todos));
         });
+      } else {
+        // Default columns if no saved state
+        board.appendChild(createColumnElement("Todo", []));
+        board.appendChild(createColumnElement("Progress", []));
+        board.appendChild(createColumnElement("Done", []));
+        saveBoardState();
+      }
+      DragEnable();
     }
 
-    let create =document.querySelector('#create')
-    create.addEventListener('click',(e)=>{
-        e.preventDefault()
-        let div = document.createElement('div')
-        let value = prompt("Enter the row name")
-        if(!value)return
-        div.classList.add("bord-items" ,"border" ,"p-2" ,"h-full" ,"flex-1" , "max-w-[400px]")
-        div.id = `${value}-board`
-        let h1 = document.createElement('h1')
-        h1.innerHTML = value
-        h1.classList.add("font-bold" ,"text-2xl" ,"border-b")
-        div.appendChild(h1)
-        board.appendChild(div)
-        DragEnable()
-    })
-</script>
+    // Create a column element from its title and an array of todos (strings)
+    function createColumnElement(title, todos) {
+      const div = document.createElement('div');
+      div.classList.add("bord-items", "relative", "border", "p-2", "h-full", "flex-1", "max-w-[400px]", "flex", "flex-col");
+
+      // Create header with title and remove button
+      const headerDiv = document.createElement('div');
+      headerDiv.classList.add("header", "flex", "justify-between", "items-center");
+      const h1 = document.createElement('h1');
+      h1.innerHTML = title;
+      h1.classList.add("font-bold", "text-2xl", "border-b");
+      const removeBtn = document.createElement('button');
+      removeBtn.innerHTML = 'X';
+      removeBtn.classList.add("remove-column", "text-red-500", "ml-2");
+      removeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        div.remove();
+        saveBoardState();
+      });
+      headerDiv.appendChild(h1);
+      headerDiv.appendChild(removeBtn);
+      div.appendChild(headerDiv);
+
+      // Button to add a new todo in this column
+      const btn = document.createElement('button');
+      btn.innerHTML = 'Add';
+      btn.classList.add("mb-2", "absolute", "bottom-0", "left-0");
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const value = prompt('Enter the todo:');
+        if (!value) return;
+        const p = createTodoElement(value);
+        div.appendChild(p);
+        saveBoardState();
+        DragEnable();
+      });
+      div.appendChild(btn);
+
+      // Append todos from the saved state
+      todos.forEach(todoText => {
+        const p = createTodoElement(todoText);
+        div.appendChild(p);
+      });
+
+      return div;
+    }
+
+    // Create a todo element (p) with drag and remove (on dblclick) events
+    function createTodoElement(text) {
+      const p = document.createElement('p');
+      p.innerHTML = text;
+      p.setAttribute('draggable', true);
+      p.classList.add(
+        'todo-item',
+        'border',
+        'p-2',
+        'bg-green-200',
+        'text-xl',
+        'rounded-md',
+        'hover:bg-green-500',
+        'cursor-pointer',
+        'mt-2'
+      );
+      // Remove the todo on double-click
+      p.addEventListener('dblclick', (e) => {
+        e.preventDefault();
+        p.remove();
+        saveBoardState();
+      });
+      // Drag events
+      p.addEventListener('dragstart', () => {
+        p.classList.add('flying');
+      });
+      p.addEventListener('dragend', () => {
+        p.classList.remove('flying');
+        saveBoardState();
+      });
+      return p;
+    }
+
+    // Enable drop zones for all columns
+    function DragEnable() {
+      const boards = document.querySelectorAll('.bord-items');
+      boards.forEach(board => {
+        board.addEventListener('dragover', (event) => {
+          event.preventDefault();
+        });
+        board.addEventListener('drop', (event) => {
+          event.preventDefault();
+          const draggedElement = document.querySelector('.flying');
+          if (draggedElement) {
+            board.appendChild(draggedElement);
+            draggedElement.classList.remove('flying');
+            saveBoardState();
+          }
+        });
+      });
+    }
+
+    // Save the board state to localStorage
+    function saveBoardState() {
+      const board = document.querySelector('#board');
+      const columns = [];
+      board.querySelectorAll('.bord-items').forEach(col => {
+        let title;
+        const header = col.querySelector('.header');
+        if (header) {
+          title = header.querySelector('h1').innerText;
+        } else {
+          title = col.querySelector('h1').innerText;
+        }
+        const todos = [];
+        col.querySelectorAll('p.todo-item').forEach(todo => {
+          todos.push(todo.innerText);
+        });
+        columns.push({ title, todos });
+      });
+      const state = { columns };
+      localStorage.setItem('kanbanBoard', JSON.stringify(state));
+    }
+
+    // Attach event handler to create new columns
+    function attachCreateColumnHandler() {
+      const create = document.querySelector('#create');
+      create.addEventListener('click', (e) => {
+        e.preventDefault();
+        const value = prompt("Enter the column name");
+        if (!value) return;
+        const newCol = createColumnElement(value, []);
+        document.querySelector('#board').appendChild(newCol);
+        saveBoardState();
+        DragEnable();
+      });
+    }
+  </script>
+</body>
 </html>
