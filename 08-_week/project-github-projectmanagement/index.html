@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Projects</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+<body class="flex">
+    <section id="board" class="flex h-[80vh] w-[100vw] gap-2 items-center p-2 text-center">
+        <div id="todo-board" class="bord-items relative border p-2 h-full flex-1 max-w-[400px] ">
+            <h1 class="font-bold text-2xl border-b">Todo</h1>
+            <button id="todo-board-add" class="mb-2 absolute bottom-0">Add</button>
+        </div>
+        <div id="progress-board" class="bord-items border p-2 h-full flex-1  max-w-[400px]">
+            <h1 class="font-bold text-2xl border-b">Progress</h1>
+        </div>
+        <div id="done-board" class="bord-items border p-2 h-full flex-1  max-w-[400px]">
+            <h1 class="font-bold text-2xl border-b">Done</h1>
+        </div>
+    </section>
+    <button id="create" class="self-start">Create</button>
+</body>
+<script>
+    let todoBoardAdd = document.querySelector('#todo-board-add')
+    let board = document.querySelector('#board')
+    todoBoardAdd.addEventListener('click',(e)=>{
+        e.preventDefault()
+        let value =prompt('Enter the todo :')
+        if(!value) return
+        let p = document.createElement('p')
+        p.innerHTML = value
+        p.setAttribute('draggable', true);
+        p.classList.add('border', 'p-2', 'bg-green-200', 'text-xl', 'rounded-md', "hover:bg-green-500", 'cursor-pointer', 'mt-2');
+    
+    
+        let parent = todoBoardAdd.parentElement
+        parent.appendChild(p)
+        p.addEventListener('dragstart',(e)=>{
+            // e.preventDefault()
+            
+            p.classList.add('flying')
+        })
+        p.addEventListener('dragend',()=>{
+            p.classList.remove('flying')
+        })
+
+    })
+    function DragEnable(){
+        let divs = document.querySelectorAll('.bord-items')
+        divs.forEach(element => {
+            element.addEventListener('dragover',(event)=>{
+                event.preventDefault()
+                let draggedElement = document.querySelector('.flying'); 
+                if (draggedElement) {
+                    element.appendChild(draggedElement); 
+                }
+            })
+        });
+    }
+
+    let create =document.querySelector('#create')
+    create.addEventListener('click',(e)=>{
+        e.preventDefault()
+        let div = document.createElement('div')
+        let value = prompt("Enter the row name")
+        if(!value)return
+        div.classList.add("bord-items" ,"border" ,"p-2" ,"h-full" ,"flex-1" , "max-w-[400px]")
+        div.id = `${value}-board`
+        let h1 = document.createElement('h1')
+        h1.innerHTML = value
+        h1.classList.add("font-bold" ,"text-2xl" ,"border-b")
+        div.appendChild(h1)
+        board.appendChild(div)
+        DragEnable()
+    })
+</script>
+</html>
