@@ -3,24 +3,131 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kanban Board</title>
+  <title>Kanban Board with Editable Modal & Horizontal Scroll</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Modal overlay with background blur */
+    #modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    /* Modal container */
+    #modal-container {
+      background: white;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      width: 20rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    /* Drop placeholder styling */
+    .drop-placeholder {
+      border: 2px dashed #000;
+      background-color: rgba(0,0,0,0.1);
+      margin: 0.5rem 0;
+    }
+    /* Highlight board when dragging over */
+    .drag-over {
+      background-color: #f0f0f0;
+    }
+  </style>
 </head>
 <body class="flex flex-col">
-  <!-- Board Container -->
-  <section id="board" class="flex h-[80vh] w-[100vw] gap-2 items-start p-2 text-center overflow-auto"></section>
+  <!-- Board Container with horizontal scroll -->
+  <section id="board" class="flex h-[80vh] w-[100vw] gap-2 items-start p-2 text-center overflow-x-auto"></section>
   <!-- Button to create new column -->
   <button id="create" class="self-start mt-4 ml-2 p-2 border rounded">Create Column</button>
-
+  
+  <!-- Preview Area -->
+  <pre id="preview" class="p-4 m-4 border bg-gray-100 text-sm overflow-auto max-h-60"></pre>
+  
+  <!-- Modal for editing (todo or column) -->
+  <div id="modal" class="flex">
+    <div id="modal-container" class="flex flex-col space-y-4">
+      <h2 id="modal-title" class="text-xl font-bold">Edit Item</h2>
+      <input id="modal-input" type="text" class="w-full border p-2" placeholder="Enter text here" />
+      <div class="flex justify-end space-x-2">
+        <button id="modal-save" class="px-4 py-2 bg-green-500 text-white rounded">Save</button>
+        <button id="modal-delete" class="px-4 py-2 bg-red-500 text-white rounded">Delete</button>
+        <button id="modal-cancel" class="px-4 py-2 bg-gray-500 text-white rounded">Cancel</button>
+      </div>
+    </div>
+  </div>
+  
   <script>
+    // Global variables to track current editing element and its type ("todo" or "column")
+    let currentEditingElement = null;
+    let currentEditingType = null; // "todo" or "column"
+    
     document.addEventListener('DOMContentLoaded', () => {
       loadBoardState();
       attachCreateColumnHandler();
     });
-
-    // Load the board state from localStorage (or create defaults)
+    
+    // Opens the modal and populates it with the element's current text.
+    function openModal(type, element) {
+      currentEditingType = type;
+      currentEditingElement = element;
+      const modal = document.getElementById("modal");
+      const modalTitle = document.getElementById("modal-title");
+      const modalInput = document.getElementById("modal-input");
+      if (type === "todo") {
+        modalTitle.innerText = "Edit Todo";
+        const span = element.querySelector("span");
+        modalInput.value = span ? span.innerText : element.innerText;
+      } else if (type === "column") {
+        modalTitle.innerText = "Edit Column";
+        const header = element.querySelector(".header h1");
+        modalInput.value = header ? header.innerText : "";
+      }
+      modal.style.display = "flex";
+    }
+    
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+      currentEditingElement = null;
+      currentEditingType = null;
+    }
+    
+    document.getElementById("modal-save").addEventListener("click", () => {
+      const newValue = document.getElementById("modal-input").value;
+      if (currentEditingElement) {
+        if (currentEditingType === "todo") {
+          const span = currentEditingElement.querySelector("span");
+          if (span) span.innerText = newValue;
+          else currentEditingElement.innerText = newValue;
+        } else if (currentEditingType === "column") {
+          const header = currentEditingElement.querySelector(".header h1");
+          if (header) header.innerText = newValue;
+        }
+        saveBoardState();
+      }
+      closeModal();
+    });
+    
+    document.getElementById("modal-delete").addEventListener("click", () => {
+      if (currentEditingElement) {
+        currentEditingElement.remove();
+        saveBoardState();
+      }
+      closeModal();
+    });
+    
+    document.getElementById("modal-cancel").addEventListener("click", () => {
+      closeModal();
+    });
+    
+    // Load board state from localStorage (or create default columns)
     function loadBoardState() {
-      const board = document.querySelector('#board');
+      const board = document.getElementById('board');
       board.innerHTML = "";
       const stored = localStorage.getItem('kanbanBoard');
       if (stored) {
@@ -29,7 +136,6 @@
           board.appendChild(createColumnElement(col.title, col.todos));
         });
       } else {
-        // Default columns if no saved state
         board.appendChild(createColumnElement("Todo", []));
         board.appendChild(createColumnElement("Progress", []));
         board.appendChild(createColumnElement("Done", []));
@@ -37,18 +143,29 @@
       }
       DragEnable();
     }
-
-    // Create a column element from its title and an array of todos (strings)
+    
+    // Create a column element with header (including "Edit" and "Remove" buttons) and its todos.
+    // Each column now has a minimum width of 400px.
     function createColumnElement(title, todos) {
       const div = document.createElement('div');
-      div.classList.add("bord-items", "relative", "border", "p-2", "h-full", "flex-1", "max-w-[400px]", "flex", "flex-col");
-
-      // Create header with title and remove button
+      div.classList.add("bord-items", "relative", "border", "p-2", "h-full", "flex-1", "min-w-[400px]", "flex", "flex-col");
+    
       const headerDiv = document.createElement('div');
       headerDiv.classList.add("header", "flex", "justify-between", "items-center");
       const h1 = document.createElement('h1');
       h1.innerHTML = title;
       h1.classList.add("font-bold", "text-2xl", "border-b");
+      headerDiv.appendChild(h1);
+      
+      const editColBtn = document.createElement('button');
+      editColBtn.innerHTML = "Edit";
+      editColBtn.classList.add("edit-column", "text-blue-500", "ml-2");
+      editColBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal("column", div);
+      });
+      headerDiv.appendChild(editColBtn);
+      
       const removeBtn = document.createElement('button');
       removeBtn.innerHTML = 'X';
       removeBtn.classList.add("remove-column", "text-red-500", "ml-2");
@@ -57,11 +174,10 @@
         div.remove();
         saveBoardState();
       });
-      headerDiv.appendChild(h1);
       headerDiv.appendChild(removeBtn);
+      
       div.appendChild(headerDiv);
-
-      // Button to add a new todo in this column
+    
       const btn = document.createElement('button');
       btn.innerHTML = 'Add';
       btn.classList.add("mb-2", "absolute", "bottom-0", "left-0");
@@ -69,77 +185,129 @@
         e.preventDefault();
         const value = prompt('Enter the todo:');
         if (!value) return;
-        const p = createTodoElement(value);
-        div.appendChild(p);
+        const todoElem = createTodoElement(value);
+        div.appendChild(todoElem);
         saveBoardState();
         DragEnable();
       });
       div.appendChild(btn);
-
-      // Append todos from the saved state
-      todos.forEach(todoText => {
-        const p = createTodoElement(todoText);
-        div.appendChild(p);
+    
+      todos.forEach(todo => {
+        const todoElem = createTodoElement(todo.text, todo.opacity);
+        div.appendChild(todoElem);
       });
-
+    
       return div;
     }
-
-    // Create a todo element (p) with drag and remove (on dblclick) events
-    function createTodoElement(text) {
-      const p = document.createElement('p');
-      p.innerHTML = text;
-      p.setAttribute('draggable', true);
-      p.classList.add(
-        'todo-item',
-        'border',
-        'p-2',
-        'bg-green-200',
-        'text-xl',
-        'rounded-md',
-        'hover:bg-green-500',
-        'cursor-pointer',
-        'mt-2'
-      );
-      // Remove the todo on double-click
-      p.addEventListener('dblclick', (e) => {
+    
+    // Create a draggable todo container with a text span, an Edit button, and double-click removal.
+    function createTodoElement(text, opacity = "1") {
+      const container = document.createElement('div');
+      container.classList.add('todo-item', 'border', 'p-2', 'bg-green-200', 'text-xl', 'rounded-md',
+                                  'hover:bg-green-500', 'cursor-pointer', 'mt-2', 'flex', 'items-center', 'justify-between');
+      container.setAttribute('draggable', true);
+      container.style.opacity = opacity;
+    
+      const span = document.createElement('span');
+      span.innerText = text;
+      container.appendChild(span);
+    
+      const editButton = document.createElement('button');
+      editButton.innerText = 'Edit';
+      editButton.classList.add('ml-2', 'p-1', 'border', 'rounded', 'text-sm', 'bg-blue-200');
+      editButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openModal("todo", container);
+      });
+      container.appendChild(editButton);
+    
+      container.addEventListener('dblclick', (e) => {
         e.preventDefault();
-        p.remove();
+        container.remove();
         saveBoardState();
       });
-      // Drag events
-      p.addEventListener('dragstart', () => {
-        p.classList.add('flying');
+    
+      container.addEventListener('dragstart', (e) => {
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/plain", "");
+        container.classList.add('flying');
       });
-      p.addEventListener('dragend', () => {
-        p.classList.remove('flying');
+      container.addEventListener('dragend', () => {
+        container.classList.remove('flying');
+        document.querySelectorAll('.drop-placeholder').forEach(el => el.remove());
         saveBoardState();
       });
-      return p;
+    
+      return container;
     }
-
-    // Enable drop zones for all columns
+    
+    // Enable drag & drop for all columns (including reordering within a column).
+    // A drop placeholder shows where the item will be inserted.
     function DragEnable() {
       const boards = document.querySelectorAll('.bord-items');
       boards.forEach(board => {
         board.addEventListener('dragover', (event) => {
           event.preventDefault();
+          event.dataTransfer.dropEffect = "move";
+          board.classList.add('drag-over');
+    
+          const draggedElement = document.querySelector('.flying');
+          if (!draggedElement) return;
+    
+          let placeholder = board.querySelector('.drop-placeholder');
+          if (!placeholder) {
+            placeholder = document.createElement('div');
+            placeholder.classList.add('drop-placeholder');
+            placeholder.style.height = draggedElement.offsetHeight + 'px';
+          }
+    
+          const dropY = event.clientY;
+          const todoItems = Array.from(board.querySelectorAll('.todo-item'))
+                               .filter(item => item !== draggedElement);
+    
+          let inserted = false;
+          for (const item of todoItems) {
+            const rect = item.getBoundingClientRect();
+            if (dropY < rect.top + rect.height / 2) {
+              board.insertBefore(placeholder, item);
+              inserted = true;
+              break;
+            }
+          }
+          if (!inserted) {
+            board.appendChild(placeholder);
+          }
         });
+    
+        board.addEventListener('dragleave', () => {
+          board.classList.remove('drag-over');
+          const placeholder = board.querySelector('.drop-placeholder');
+          if (placeholder) placeholder.remove();
+        });
+    
         board.addEventListener('drop', (event) => {
           event.preventDefault();
+          board.classList.remove('drag-over');
           const draggedElement = document.querySelector('.flying');
           if (draggedElement) {
-            board.appendChild(draggedElement);
+            const placeholder = board.querySelector('.drop-placeholder');
+            if (placeholder) {
+              board.insertBefore(draggedElement, placeholder);
+              placeholder.remove();
+            } else {
+              board.appendChild(draggedElement);
+            }
+            draggedElement.style.opacity = "0.5";
             draggedElement.classList.remove('flying');
             saveBoardState();
           }
         });
       });
     }
-
-    // Save the board state to localStorage
+    
+    // Save board state to localStorage and update the preview area.
     function saveBoardState() {
-      const board = document.querySelector('#board');
+      const board = document.getElementById('board');
       const columns = [];
       board.querySelectorAll('.bord-items').forEach(col => {
         let title;
@@ -150,24 +318,31 @@
           title = col.querySelector('h1').innerText;
         }
         const todos = [];
-        col.querySelectorAll('p.todo-item').forEach(todo => {
-          todos.push(todo.innerText);
+        col.querySelectorAll('.todo-item').forEach(todo => {
+          const span = todo.querySelector('span');
+          todos.push({ text: span.innerText, opacity: todo.style.opacity || "1" });
         });
         columns.push({ title, todos });
       });
       const state = { columns };
       localStorage.setItem('kanbanBoard', JSON.stringify(state));
+      updatePreview(state);
     }
-
-    // Attach event handler to create new columns
+    
+    // Update the preview area with the current board state (JSON formatted).
+    function updatePreview(state) {
+      document.getElementById('preview').innerText = JSON.stringify(state, null, 2);
+    }
+    
+    // Attach event handler to create new columns.
     function attachCreateColumnHandler() {
-      const create = document.querySelector('#create');
+      const create = document.getElementById('create');
       create.addEventListener('click', (e) => {
         e.preventDefault();
         const value = prompt("Enter the column name");
         if (!value) return;
         const newCol = createColumnElement(value, []);
-        document.querySelector('#board').appendChild(newCol);
+        document.getElementById('board').appendChild(newCol);
         saveBoardState();
         DragEnable();
       });
