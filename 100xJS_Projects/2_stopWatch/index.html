@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+</head>
+
+<body>
+    <div id="container">
+        <h1>Countdown Counter</h1>
+        <input type="number" id="input" placeholder="Enter in seconds">
+        <button id="start">Start Counter</button>
+        <button id="stop" disabled>Stop</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        const result = document.getElementById("result");
+        const startBtn = document.getElementById("start");
+        const stopBtn = document.getElementById("stop");
+        const inputField = document.getElementById("input");
+
+        let countdownValue = 0;
+        let intervalRef = null;
+
+    
+        function startCountdown() {
+            let value = parseInt(inputField.value);
+
+            if (isNaN(value) || value <= 0) {
+                result.innerHTML = "Please enter a valid number above 0";
+                return;
+            }
+
+            countdownValue = value;
+            stopBtn.innerHTML = "Stop";
+            stopBtn.disabled = false;
+            startBtn.disabled = true;
+            inputField.disabled = true;
+
+            clearInterval(intervalRef); 
+            intervalRef = setInterval(updateClock, 1000);
+        }
+
+        
+        function updateClock() {
+            if (countdownValue > 0) {
+                result.innerHTML = `Time left: ${countdownValue} seconds`;
+                countdownValue--;
+            } else {
+                result.innerHTML = "Time up!";
+                clearInterval(intervalRef);
+                stopBtn.disabled = true;
+                startBtn.disabled = false;
+                inputField.disabled = false;
+            }
+        }
+
+        
+        function toggleCountdown() {
+            if (intervalRef) {
+                clearInterval(intervalRef);
+                intervalRef = null;
+                stopBtn.innerHTML = "Resume";
+            } else {
+                stopBtn.innerHTML = "Stop";
+                intervalRef = setInterval(updateClock, 1000);
+            }
+        }
+
+        startBtn.addEventListener("click", startCountdown);
+        stopBtn.addEventListener("click", toggleCountdown);
+    </script>
+</body>
+
+</html>
