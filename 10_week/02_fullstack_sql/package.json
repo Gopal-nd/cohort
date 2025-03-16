@@ -4,6 +4,7 @@
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/nodemailer": "^6.4.17",
     "prisma": "6.5.0"
   },
@@ -15,7 +16,6 @@
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
-    "@types/jsonwebtoken": "^9.0.9",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "express": "^4.21.2",

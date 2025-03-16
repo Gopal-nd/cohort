@@ -3,6 +3,7 @@ import { prisma } from "../lib/prisma"
 import crypto from 'crypto'
 import { transporter } from "../lib/mail"
 import jwt from 'jsonwebtoken'
+import type { AuthenticatedRequest } from "../middleware/auth"
 
 export async function registerController(req:Request,res:Response) {
     const {name, email, password ,age, phone,username} = req.body
@@ -177,3 +178,20 @@ export const VerifyUser = async(req:Request,res:Response)=>{
     }
     
 }
+
+export function getMeController(req: AuthenticatedRequest, res: Response) {
+  if (!req.user) {
+    return res.status(401).json({ message: "Not authenticated" });
+  }
+  return res.status(200).json({ user: req.user });
+}
+// controllers/userController.ts (continue)
+export function logoutController(req: Request, res: Response) {
+    res.clearCookie("sessionId", {
+      httpOnly: true,
+      secure: true, // adjust based on your environment (true for production)
+      path: "/",
+    });
+    return res.status(200).json({ message: "Logged out successfully" });
+  }
+  
