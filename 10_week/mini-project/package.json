@@ -1,0 +1,17 @@
+{
+  "name": "mini-project",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@types/express": "^5.0.1",
+    "@types/youtube-captions-scraper": "^1.0.0",
+    "express": "^4.21.2",
+    "youtube-captions-scraper": "^2.0.3"
+  }
+}
