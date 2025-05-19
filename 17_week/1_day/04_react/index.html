@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div>
+        <h1>Hello This Super React</h1>
+    </div>
+    <div id="root"></div>
+      <!-- React and ReactDOM CDN -->
+
+    <!-- React Script without babel -->
+    <!-- <script>
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(
+            React.createElement('div', { className: "text-2xl text-green-500" }, 'Hello from React + Tailwind!')
+        );
+    </script> -->
+
+    <script type="text/babel">
+        const App = () => {
+            return (
+                <div className="text-2xl text-green-500">
+                    Hello from React + Tailwind!
+                </div>
+            );
+        }
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App/>)
+    </script>
+    
+</body>
+</html>
