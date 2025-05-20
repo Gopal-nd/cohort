@@ -3,6 +3,10 @@ export function App(){
     const [name, setName] = useState("Chai Chill")
     const [show, setShow] = useState(true);
 
+    
+    setShow(pre => !pre)
+    setShow(pre => !pre)
+
     useEffect(async() => {
        const url = 'https://api.freeapi.app/api/v1/public/randomusers?page=1&limit=10';
 const options = {method: 'GET', headers: {accept: 'application/json'}};
